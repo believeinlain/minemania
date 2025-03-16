@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://b0or4r56t3evk"]
+[gd_scene load_steps=21 format=3 uid="uid://b0or4r56t3evk"]
 
 [ext_resource type="PackedScene" uid="uid://blgudukan5c86" path="res://scenes/block.tscn" id="1_gqkak"]
+[ext_resource type="PackedScene" uid="uid://cm2ciikw25wbi" path="res://scenes/mine.tscn" id="2_vyjha"]
 [ext_resource type="Material" uid="uid://dtfy8f5eebt01" path="res://mat/indicator1.tres" id="3_7v3oe"]
 [ext_resource type="ArrayMesh" uid="uid://cgjggkykv7j62" path="res://mesh/mine.res" id="3_aefpu"]
 [ext_resource type="ArrayMesh" uid="uid://cyud6xun0wttp" path="res://mesh/single1.res" id="3_ra533"]
@@ -24,10 +25,8 @@
 
 [node name="Block" parent="." instance=ExtResource("1_gqkak")]
 
-[node name="Mine" type="MeshInstance3D" parent="."]
+[node name="Mine" parent="." instance=ExtResource("2_vyjha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
-mesh = ExtResource("3_aefpu")
-skeleton = NodePath("../Block")
 
 [node name="MineRed" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)

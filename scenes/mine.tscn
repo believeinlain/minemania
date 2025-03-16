@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm2ciikw25wbi"]
+
+[ext_resource type="ArrayMesh" uid="uid://cgjggkykv7j62" path="res://mesh/mine.res" id="1_kqr42"]
+
+[node name="Mine" type="MeshInstance3D"]
+mesh = ExtResource("1_kqr42")
+skeleton = NodePath("../Block")

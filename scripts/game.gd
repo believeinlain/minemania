@@ -1,15 +1,16 @@
 extends Node3D
 
+
 func _ready():
 	var block = preload("res://scenes/block.tscn")
 	var camera = get_node("CameraPivot/Camera3D")
 	var settings = get_node("Settings")
 	var minefield = get_node("Minefield")
-	
+
 	var m_x = settings.field_size.x
 	var m_y = settings.field_size.y
 	var m_z = settings.field_size.z
-	
+
 	for x in m_x:
 		for y in m_y:
 			for z in m_z:
@@ -19,5 +20,5 @@ func _ready():
 				var instance = block.instantiate()
 				instance.translate(Vector3(c_x, c_y, c_z))
 				instance.index = Vector3i(x, y, z)
-				add_child(instance)
-				minefield.cells[instance.index] = instance
+				minefield.add_child(instance)
+				minefield.init_cell(instance.index, instance)

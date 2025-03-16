@@ -31,3 +31,4 @@ script = ExtResource("6_p57ef")
 
 [node name="Settings" type="Node" parent="."]
 script = ExtResource("7_u5sy4")
+safety = 2
