@@ -8,6 +8,7 @@
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_uwrxv")
+field_size = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("2_lbhrr")
@@ -21,5 +22,5 @@ shadow_enabled = true
 [node name="Camera" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="Camera"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 script = ExtResource("2_iywne")

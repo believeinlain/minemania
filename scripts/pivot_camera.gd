@@ -21,7 +21,6 @@ func _input(event):
 		parent.rotate(parent.basis.x, -delta_y)
 		
 		tilt = parent.basis.y.dot(Vector3.UP)
-		print("tilt: ", tilt)
 		if tilt > 0.01:
 			look_at(Vector3.ZERO, Vector3.UP)
 		if tilt < -0.01:
