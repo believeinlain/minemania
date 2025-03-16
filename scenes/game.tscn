@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://dly2fc31c4kj5"]
+
+[ext_resource type="Script" uid="uid://bowllqf16fwlk" path="res://scripts/game.gd" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://e4drhg3yeqh0" path="res://scripts/pivot_camera.gd" id="2_iywne"]
+[ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://mat/sky.tres" id="2_lbhrr"]
+[ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://mat/camera.tres" id="3_iywne"]
+[ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://mat/compositor.tres" id="4_p57ef"]
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_uwrxv")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_lbhrr")
+camera_attributes = ExtResource("3_iywne")
+compositor = ExtResource("4_p57ef")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.380086, -0.597633, 0.705953, 3.0629e-08, 0.763232, 0.646124, -0.924951, -0.245583, 0.290094, 2.64199, 2.05139, -1.296)
+shadow_enabled = true
+
+[node name="Camera" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+script = ExtResource("2_iywne")

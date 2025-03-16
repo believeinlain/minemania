@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dtfy8f5eebt01"]
+
+[ext_resource type="Shader" uid="uid://xhx634vic5oe" path="res://shaders/indicator.gdshader" id="1_dpphm"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_dpphm")
+shader_parameter/albedo = Color(0.231373, 0.419608, 1, 1)
+shader_parameter/emmissivity = 0.8
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.58
+shader_parameter/alpha = 0.75

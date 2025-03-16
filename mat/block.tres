@@ -1,0 +1,13 @@
+[gd_resource type="ORMMaterial3D" load_steps=4 format=3 uid="uid://5fox33odvoxm"]
+
+[ext_resource type="Texture2D" uid="uid://d3haxnygaumhk" path="res://mat/concrete_02_albedo.png" id="1_celfg"]
+[ext_resource type="Texture2D" uid="uid://d2adc22u0nai5" path="res://mat/concrete_02_normal.png" id="2_04pmk"]
+[ext_resource type="Texture2D" uid="uid://nd6j1dqvsnnb" path="res://mat/concrete_02_orm.png" id="3_l78sc"]
+
+[resource]
+albedo_texture = ExtResource("1_celfg")
+orm_texture = ExtResource("3_l78sc")
+normal_enabled = true
+normal_scale = 0.5
+normal_texture = ExtResource("2_04pmk")
+uv1_scale = Vector3(2, 2, 2)

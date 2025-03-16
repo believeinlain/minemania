@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://c06re4y4ftnk5"]
+
+[ext_resource type="Material" uid="uid://tk52j8hklnu4" path="res://mat/mine.tres" id="1_kp87o"]
+[ext_resource type="Shader" uid="uid://b611pi34e7upj" path="res://shaders/outline.gdshader" id="2_viyle"]
+
+[resource]
+render_priority = 1
+next_pass = ExtResource("1_kp87o")
+shader = ExtResource("2_viyle")
+shader_parameter/outline_color = Color(1, 0.0392157, 0, 1)
+shader_parameter/outline_emmissivity = 0.5
+shader_parameter/outline_width = 10.0
+shader_parameter/outline_alpha = 0.7

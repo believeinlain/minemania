@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://dnd6p2r2srffw"]
+
+[ext_resource type="ArrayMesh" uid="uid://cyud6xun0wttp" path="res://mesh/single1.res" id="1_yjwgo"]
+[ext_resource type="Script" uid="uid://cg1811me574rn" path="res://scripts/rotate_inner.gd" id="2_3pohj"]
+[ext_resource type="ArrayMesh" uid="uid://cwiwjm316nn7l" path="res://mesh/ring.res" id="3_352fo"]
+[ext_resource type="Script" uid="uid://djt483hvp2ubs" path="res://scripts/rotate_orbit.gd" id="4_iqefy"]
+
+[node name="Indicator5" type="Node3D"]
+
+[node name="Indicator5" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+mesh = ExtResource("1_yjwgo")
+skeleton = NodePath("../..")
+script = ExtResource("2_3pohj")
+
+[node name="Ring" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_352fo")
+skeleton = NodePath("../..")
+script = ExtResource("4_iqefy")

@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://ce3i6c4qbno0q"]
+
+[ext_resource type="Material" uid="uid://tk52j8hklnu4" path="res://mat/mine.tres" id="1_oeabo"]
+[ext_resource type="Shader" uid="uid://b611pi34e7upj" path="res://shaders/outline.gdshader" id="2_mhmvs"]
+
+[resource]
+render_priority = 1
+next_pass = ExtResource("1_oeabo")
+shader = ExtResource("2_mhmvs")
+shader_parameter/outline_color = Color(0, 1, 0, 1)
+shader_parameter/outline_emmissivity = 0.5
+shader_parameter/outline_width = 10.0
+shader_parameter/outline_alpha = 0.7

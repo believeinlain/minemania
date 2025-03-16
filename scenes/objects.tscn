@@ -1,0 +1,209 @@
+[gd_scene load_steps=20 format=3 uid="uid://b0or4r56t3evk"]
+
+[ext_resource type="PackedScene" uid="uid://blgudukan5c86" path="res://scenes/block.tscn" id="1_gqkak"]
+[ext_resource type="Material" uid="uid://dtfy8f5eebt01" path="res://mat/indicator1.tres" id="3_7v3oe"]
+[ext_resource type="ArrayMesh" uid="uid://cgjggkykv7j62" path="res://mesh/mine.res" id="3_aefpu"]
+[ext_resource type="ArrayMesh" uid="uid://cyud6xun0wttp" path="res://mesh/single1.res" id="3_ra533"]
+[ext_resource type="ArrayMesh" uid="uid://de76vqews28uq" path="res://mesh/single2.res" id="4_7v3oe"]
+[ext_resource type="Material" uid="uid://ce3i6c4qbno0q" path="res://mat/mine_outline_green.tres" id="5_gyyo7"]
+[ext_resource type="Material" uid="uid://bphgi8w0lqw4d" path="res://mat/indicator2.tres" id="5_lbg2g"]
+[ext_resource type="Material" uid="uid://c06re4y4ftnk5" path="res://mat/mine_outline_red.tres" id="5_r5rt6"]
+[ext_resource type="PackedScene" uid="uid://dnd6p2r2srffw" path="res://scenes/indicator_5.tscn" id="10_vyjha"]
+[ext_resource type="Material" uid="uid://endhurtjxgt6" path="res://mat/indicator3.tres" id="11_665an"]
+[ext_resource type="ArrayMesh" uid="uid://bio47ponsx1x" path="res://mesh/single3.res" id="12_lkxaq"]
+[ext_resource type="Material" uid="uid://cfbconbdgwot1" path="res://mat/indicator4.tres" id="13_8lpvc"]
+[ext_resource type="ArrayMesh" uid="uid://y6yg4pk4imn" path="res://mesh/single4.res" id="14_2ae6o"]
+[ext_resource type="Script" uid="uid://cg1811me574rn" path="res://scripts/rotate_inner.gd" id="15_8lpvc"]
+[ext_resource type="ArrayMesh" uid="uid://cwiwjm316nn7l" path="res://mesh/ring.res" id="16_8lpvc"]
+[ext_resource type="Script" uid="uid://djt483hvp2ubs" path="res://scripts/rotate_orbit.gd" id="18_0le4o"]
+[ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://mat/sky.tres" id="18_vyjha"]
+[ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://mat/camera.tres" id="19_0le4o"]
+[ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://mat/compositor.tres" id="20_x7wln"]
+
+[node name="Root" type="Node3D"]
+
+[node name="Block" parent="." instance=ExtResource("1_gqkak")]
+
+[node name="Mine" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = ExtResource("3_aefpu")
+skeleton = NodePath("../Block")
+
+[node name="MineRed" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+mesh = ExtResource("3_aefpu")
+skeleton = NodePath("../Block")
+surface_material_override/0 = ExtResource("5_r5rt6")
+
+[node name="MineGreen" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
+mesh = ExtResource("3_aefpu")
+skeleton = NodePath("../Block")
+surface_material_override/0 = ExtResource("5_gyyo7")
+
+[node name="Indicator1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+mesh = ExtResource("3_ra533")
+script = ExtResource("15_8lpvc")
+
+[node name="Indicator2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+mesh = ExtResource("4_7v3oe")
+script = ExtResource("15_8lpvc")
+
+[node name="Indicator3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+mesh = ExtResource("12_lkxaq")
+script = ExtResource("15_8lpvc")
+
+[node name="Indicator4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+mesh = ExtResource("14_2ae6o")
+script = ExtResource("15_8lpvc")
+
+[node name="Indicator5" parent="." instance=ExtResource("10_vyjha")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
+
+[node name="Indicator10" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+
+[node name="Ring" type="MeshInstance3D" parent="Indicator10"]
+mesh = ExtResource("16_8lpvc")
+skeleton = NodePath("../..")
+script = ExtResource("18_0le4o")
+
+[node name="Indicator10" type="MeshInstance3D" parent="Indicator10"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+mesh = ExtResource("4_7v3oe")
+skeleton = NodePath("../..")
+script = ExtResource("15_8lpvc")
+
+[node name="Indicator6" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -3)
+
+[node name="Indicator5" type="MeshInstance3D" parent="Indicator6"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../..")
+script = ExtResource("15_8lpvc")
+
+[node name="Ring" type="MeshInstance3D" parent="Indicator6"]
+mesh = ExtResource("16_8lpvc")
+skeleton = NodePath("../..")
+script = ExtResource("18_0le4o")
+
+[node name="Indicator1" type="MeshInstance3D" parent="Indicator6/Ring"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
+material_override = ExtResource("3_7v3oe")
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../../..")
+
+[node name="Indicator7" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -4)
+
+[node name="Indicator5" type="MeshInstance3D" parent="Indicator7"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../..")
+script = ExtResource("15_8lpvc")
+
+[node name="Ring" type="MeshInstance3D" parent="Indicator7"]
+mesh = ExtResource("16_8lpvc")
+skeleton = NodePath("../..")
+script = ExtResource("18_0le4o")
+
+[node name="Indicator1" type="MeshInstance3D" parent="Indicator7/Ring"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("5_lbg2g")
+
+[node name="Indicator2" type="MeshInstance3D" parent="Indicator7/Ring"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("5_lbg2g")
+
+[node name="Indicator8" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -5)
+
+[node name="Indicator5" type="MeshInstance3D" parent="Indicator8"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../..")
+script = ExtResource("15_8lpvc")
+
+[node name="Ring" type="MeshInstance3D" parent="Indicator8"]
+mesh = ExtResource("16_8lpvc")
+skeleton = NodePath("../..")
+script = ExtResource("18_0le4o")
+
+[node name="Indicator1" type="MeshInstance3D" parent="Indicator8/Ring"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("11_665an")
+
+[node name="Indicator2" type="MeshInstance3D" parent="Indicator8/Ring"]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0.259808, 0, 0.15)
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("11_665an")
+
+[node name="Indicator3" type="MeshInstance3D" parent="Indicator8/Ring"]
+transform = Transform3D(-0.5, 0, 0.866026, 0, 1, 0, -0.866026, 0, -0.5, -0.259808, 0, 0.15)
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("11_665an")
+
+[node name="Indicator9" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -6)
+
+[node name="Indicator5" type="MeshInstance3D" parent="Indicator9"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../..")
+script = ExtResource("15_8lpvc")
+
+[node name="Ring" type="MeshInstance3D" parent="Indicator9"]
+mesh = ExtResource("16_8lpvc")
+skeleton = NodePath("../..")
+script = ExtResource("18_0le4o")
+
+[node name="Indicator1" type="MeshInstance3D" parent="Indicator9/Ring"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("13_8lpvc")
+
+[node name="Indicator2" type="MeshInstance3D" parent="Indicator9/Ring"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
+material_override = ExtResource("13_8lpvc")
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("5_lbg2g")
+
+[node name="Indicator3" type="MeshInstance3D" parent="Indicator9/Ring"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.3, 0, 0)
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("13_8lpvc")
+
+[node name="Indicator4" type="MeshInstance3D" parent="Indicator9/Ring"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.3, 0, 0)
+material_override = ExtResource("13_8lpvc")
+mesh = ExtResource("3_ra533")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("5_lbg2g")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1.8339e-08, -0.907734, 0.419547, -3.96783e-08, 0.419547, 0.907734, -1, -1.85092e-15, -4.37114e-08, 1.76145, 2.95244, -2.64295)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("18_vyjha")
+camera_attributes = ExtResource("19_0le4o")
+compositor = ExtResource("20_x7wln")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.380086, -0.597633, 0.705953, 3.0629e-08, 0.763232, 0.646124, -0.924951, -0.245583, 0.290094, 2.64199, 2.05139, -1.296)
+shadow_enabled = true
