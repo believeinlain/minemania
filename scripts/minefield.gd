@@ -1,16 +1,23 @@
-class_name Minefield
+extends Node
 
 var cells: Dictionary
-@export var density: float
-#safety: Safety
 
 var initialized = false
 
-func clicked_on(index: Vector3i):
-	print_debug("Clicked on ", index)
+func _on_mine_revealed(index: Vector3i):
+	print_debug("Revealed: ", cells[index], " at ", index)
+	
+	if not initialized:
+		initialize(index)
+	
+func _on_mine_marked(index: Vector3i):
+	print_debug("Marked: ", index)
 
-#fn initialize(&mut self, blocks: &Query<(Entity, &Block)>, click_location: FieldIndex) {
-func initialize(size: Vector3i, clicked: Vector3i):
+func initialize(clicked: Vector3i):
+	var settings = get_node("../Settings")
+	var size = settings.field_size
+	var density = settings.mine_density
+	
 	print_debug("Creating minefield")
 	var num_blocks = size.x * size.y * size.z
 	var num_mines: int = num_blocks * density
@@ -106,3 +113,4 @@ func initialize(size: Vector3i, clicked: Vector3i):
 			#}
 		#}
 	#}
+	initialized = true

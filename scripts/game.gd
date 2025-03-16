@@ -1,26 +1,23 @@
 extends Node3D
 
-var minefield = Minefield.new()
-@export var field_size = Vector3i(3, 3, 3)
-
 func _ready():
 	var block = preload("res://scenes/block.tscn")
-	var camera = get_node("Camera/Camera3D")
+	var camera = get_node("CameraPivot/Camera3D")
+	var settings = get_node("Settings")
+	var minefield = get_node("Minefield")
 	
-	for x in field_size.x:
-		for y in field_size.y:
-			for z in field_size.z:
-				var c_x = x - field_size.x / 2
-				var c_y = y - field_size.y / 2
-				var c_z = z - field_size.z / 2
+	var m_x = settings.field_size.x
+	var m_y = settings.field_size.y
+	var m_z = settings.field_size.z
+	
+	for x in m_x:
+		for y in m_y:
+			for z in m_z:
+				var c_x = x - m_x / 2
+				var c_y = y - m_y / 2
+				var c_z = z - m_z / 2
 				var instance = block.instantiate()
 				instance.translate(Vector3(c_x, c_y, c_z))
 				instance.index = Vector3i(x, y, z)
-				instance.minefield = minefield
 				add_child(instance)
-				var cell = Cell.new()
-				cell.contents = instance
-				cell.index = Vector3i(x, y, z)
-	
-	minefield.initialize(field_size, field_size)
-	
+				minefield.cells[instance.index] = instance
