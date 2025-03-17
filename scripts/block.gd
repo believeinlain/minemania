@@ -38,3 +38,8 @@ func mark():
 		mark.visible = false
 
 	block_marked.emit(index, marked)
+
+
+func crack():
+	var mesh: MeshInstance3D = get_node("BlockMesh")
+	mesh.set_surface_override_material(0, preload("res://mat/block_cracked.tres"))

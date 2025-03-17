@@ -63,6 +63,11 @@ func reveal(index: Vector3i):
 			timer.timeout.connect(func(): _on_cascade_timeout(index))
 			add_child(timer)
 
+	var crack = func(index):
+		var instance = cells[index]["instance"]
+		if not instance == null:
+			instance.crack()
+
 	if cell["contains_mine"]:
 		var mine = preload("res://scenes/objects/mine.tscn")
 		var instance = mine.instantiate()
@@ -73,7 +78,7 @@ func reveal(index: Vector3i):
 		if adjacent_mines > 0:
 			Indicator.spawn(self, adjacent_mines, cell["adjacent_cells"], cell["position"])
 		else:
-			foreach_adjacent_facing(index, cascade)
+			foreach_adjacent_facing(index, crack)
 
 
 func initialize(clicked: Vector3i):
@@ -86,7 +91,7 @@ func initialize(clicked: Vector3i):
 
 	for index in cells.keys():
 		foreach_adjacent_facing(index, func(adj_index): cells[index]["adjacent_cells"] += 1)
-		print_debug(cells[index]["adjacent_cells"])
+		#print_debug(cells[index]["adjacent_cells"])
 
 	print_debug("Density=", density, " num_mines=", num_mines, "/", num_blocks)
 
