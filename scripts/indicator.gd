@@ -2,10 +2,11 @@ class_name Indicator extends CollisionObject3D
 
 var speed = 0.03
 @export var value = 1
+var max = 0
 var tooltip: Label
 
 
-static func spawn(parent: Node, adjacent_mines: int, position: Vector3):
+static func spawn(parent: Node, adjacent_mines, adjacent_cells, position: Vector3):
 	var res: PackedScene
 	match adjacent_mines:
 		1:
@@ -22,6 +23,7 @@ static func spawn(parent: Node, adjacent_mines: int, position: Vector3):
 	var indicator: Indicator = res.instantiate()
 	indicator.translate(position)
 	indicator.value = adjacent_mines
+	indicator.max = adjacent_cells
 	parent.add_child(indicator)
 
 
@@ -30,7 +32,7 @@ func _enter_tree():
 
 
 func _mouse_enter():
-	tooltip.text = str(value)
+	tooltip.text = "%s" % value
 	print_debug("mousover ", value)
 
 

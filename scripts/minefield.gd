@@ -9,6 +9,7 @@ func init_cell(index: Vector3i, instance: Node3D):
 		"instance": instance,
 		"position": instance.position,
 		"adjacent_mines": 0,
+		"adjacent_cells": 0,
 		"contains_mine": false,
 		"revealed": false,
 		"marked": false,
@@ -70,7 +71,7 @@ func reveal(index: Vector3i):
 	else:
 		var adjacent_mines = cell["adjacent_mines"]
 		if adjacent_mines > 0:
-			Indicator.spawn(self, adjacent_mines, cell["position"])
+			Indicator.spawn(self, adjacent_mines, cell["adjacent_cells"], cell["position"])
 		else:
 			foreach_adjacent_facing(index, cascade)
 
@@ -82,6 +83,10 @@ func initialize(clicked: Vector3i):
 
 	var num_blocks = size.x * size.y * size.z
 	var num_mines: int = num_blocks * density
+
+	for index in cells.keys():
+		foreach_adjacent_facing(index, func(adj_index): cells[index]["adjacent_cells"] += 1)
+		print_debug(cells[index]["adjacent_cells"])
 
 	print_debug("Density=", density, " num_mines=", num_mines, "/", num_blocks)
 
