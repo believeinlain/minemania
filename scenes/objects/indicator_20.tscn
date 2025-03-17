@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3x3ajpe5nqpm"]
+
+[ext_resource type="ArrayMesh" uid="uid://y6yg4pk4imn" path="res://mesh/single4.res" id="1_hawjn"]
+[ext_resource type="Script" uid="uid://wi5lhnavan3a" path="res://scripts/indicator.gd" id="1_q4anx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_q4anx"]
+radius = 0.15
+
+[node name="StaticBody3D" type="StaticBody3D"]
+script = ExtResource("1_q4anx")
+
+[node name="Indicator21" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+mesh = ExtResource("1_hawjn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0826694, 0.0747961)
+shape = SubResource("SphereShape3D_q4anx")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0826694, -0.0755835)
+shape = SubResource("SphereShape3D_q4anx")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0755835, -0.0826694, 0)
+shape = SubResource("SphereShape3D_q4anx")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0747961, -0.0826694, 0)
+shape = SubResource("SphereShape3D_q4anx")

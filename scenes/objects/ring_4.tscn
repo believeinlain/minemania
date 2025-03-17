@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://hxpb0jyvu7k6"]
+
+[ext_resource type="ArrayMesh" uid="uid://cwiwjm316nn7l" path="res://mesh/ring.res" id="1_xtvx2"]
+[ext_resource type="Script" uid="uid://djt483hvp2ubs" path="res://scripts/rotate_orbit.gd" id="2_63y7h"]
+[ext_resource type="ArrayMesh" uid="uid://cyud6xun0wttp" path="res://mesh/single1.res" id="3_v3y6r"]
+[ext_resource type="Material" uid="uid://cfbconbdgwot1" path="res://mat/indicator4.tres" id="4_iifms"]
+[ext_resource type="Material" uid="uid://bphgi8w0lqw4d" path="res://mat/indicator2.tres" id="5_66ngw"]
+
+[node name="Ring4" type="MeshInstance3D"]
+mesh = ExtResource("1_xtvx2")
+script = ExtResource("2_63y7h")
+
+[node name="Indicator1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
+mesh = ExtResource("3_v3y6r")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_iifms")
+
+[node name="Indicator2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
+material_override = ExtResource("4_iifms")
+mesh = ExtResource("3_v3y6r")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("5_66ngw")
+
+[node name="Indicator3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.3, 0, 0)
+mesh = ExtResource("3_v3y6r")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_iifms")
+
+[node name="Indicator4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.3, 0, 0)
+material_override = ExtResource("4_iifms")
+mesh = ExtResource("3_v3y6r")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("5_66ngw")

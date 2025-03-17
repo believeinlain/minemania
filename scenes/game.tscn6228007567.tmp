@@ -16,10 +16,14 @@ environment = ExtResource("2_lbhrr")
 camera_attributes = ExtResource("3_iywne")
 compositor = ExtResource("4_p57ef")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.380086, -0.597633, 0.705953, 3.0629e-08, 0.763232, 0.646124, -0.924951, -0.245583, 0.290094, 2.64199, 2.05139, -1.296)
+shadow_enabled = true
+
 [node name="CameraPivot" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 4, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 script = ExtResource("2_iywne")
 
 [node name="Minefield" type="Node" parent="."]
@@ -27,23 +31,4 @@ script = ExtResource("6_p57ef")
 
 [node name="Settings" type="Node" parent="."]
 script = ExtResource("7_u5sy4")
-field_size = Vector3i(5, 5, 5)
 safety = 2
-
-[node name="Tooltip" type="Label" parent="."]
-offset_left = -23.0
-offset_top = -23.0
-offset_right = -2.0
-pivot_offset = Vector2(23, 23)
-size_flags_horizontal = 8
-size_flags_vertical = 8
-text = "25"
-horizontal_alignment = 2
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.380086, -0.597633, 0.705953, 3.0629e-08, 0.763232, 0.646124, -0.924951, -0.245583, 0.290094, 2.64199, 2.05139, -1.296)
-shadow_enabled = true
-
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.461121, -0.278181, -0.842605, 0.533799, 0.845512, 0.0129841, 0.70882, -0.455769, 0.538376, -1.61239, 2.05139, 4.82832)
-light_energy = 0.3

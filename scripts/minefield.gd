@@ -11,6 +11,7 @@ func init_cell(index: Vector3i, instance: Node3D):
 		"adjacent_mines": 0,
 		"contains_mine": false,
 		"revealed": false,
+		"marked": false,
 	}
 
 
@@ -21,32 +22,57 @@ func _on_block_revealed(index: Vector3i):
 	reveal(index)
 
 
-func _on_mine_marked(index: Vector3i):
-	print_debug("Marked: ", index)
+func _on_block_marked(index: Vector3i, marked: bool):
+	cells[index]["marked"] = marked
+	print_debug("Marked: ", index, ", ", marked)
+
+
+func _on_cascade_timeout(index: Vector3i):
+	reveal(index)
 
 
 func reveal(index: Vector3i):
+	var reveal_sound = preload("res://audio/pop2.ogg")
 	var cell = cells[index]
-	cell["revealed"] = true
-	print_debug("Revealed: ", cell, " at ", index)
+	if cell["revealed"]:
+		return
 
-	cell["instance"].queue_free()
-	cell["instance"] = null
+	cell["revealed"] = true
+	#print_debug("Revealed: ", cell, " at ", index)
+	var sound_player = AudioStreamPlayer3D.new()
+	add_child(sound_player)
+	sound_player.stream = reveal_sound
+	sound_player.position = cell["position"]
+	sound_player.play()
+	# TODO: Remove stream player after done playing!
+
+	if not cell["instance"] == null:
+		cell["instance"].queue_free()
+		cell["instance"] = null
+
+	var cascade = func(index):
+		# I think we don't want cascade?
+		return
+		if not cells[index]["revealed"]:
+			cell["revealed"] = true
+			var timer = Timer.new()
+			timer.autostart = true
+			timer.one_shot = true
+			timer.wait_time = randf_range(0.2, 0.5)
+			timer.timeout.connect(func(): _on_cascade_timeout(index))
+			add_child(timer)
 
 	if cell["contains_mine"]:
-		var mine = preload("res://scenes/mine.tscn")
+		var mine = preload("res://scenes/objects/mine.tscn")
 		var instance = mine.instantiate()
 		instance.translate(cell["position"])
 		add_child(instance)
-
-	# Reveal adjacent mines
-	if cell["adjacent_mines"] == 0:
-		foreach_adjacent(index, reveal_if_safe)
-
-
-func reveal_if_safe(index: Vector3i):
-	if !cells[index]["revealed"] and !cells[index]["contains_mine"]:
-		reveal(index)
+	else:
+		var adjacent_mines = cell["adjacent_mines"]
+		if adjacent_mines > 0:
+			Indicator.spawn(self, adjacent_mines, cell["position"])
+		else:
+			foreach_adjacent_facing(index, cascade)
 
 
 func initialize(clicked: Vector3i):
@@ -68,7 +94,7 @@ func initialize(clicked: Vector3i):
 			safe_cells = {clicked: null}
 		Settings.MineSafety.CLEAR:
 			safe_cells = {clicked: null}
-			foreach_adjacent(clicked, func(adj_index): safe_cells[adj_index] = null)
+			foreach_adjacent_facing(clicked, func(adj_index): safe_cells[adj_index] = null)
 
 	print_debug("Safe cells: ", safe_cells.keys())
 
@@ -86,9 +112,11 @@ func initialize(clicked: Vector3i):
 		cells[mine_index]["contains_mine"] = true
 
 		# Increment the number of adjacent mines in each cell next to a new mine
-		foreach_adjacent(mine_index, func(adj_index): cells[adj_index]["adjacent_mines"] += 1)
+		foreach_adjacent_facing(
+			mine_index, func(adj_index): cells[adj_index]["adjacent_mines"] += 1
+		)
 
-		print_debug("Placed mine at ", mine_index, ", ", mines_to_place, " remaining")
+		#print_debug("Placed mine at ", mine_index, ", ", mines_to_place, " remaining")
 
 		mines_to_place -= 1
 

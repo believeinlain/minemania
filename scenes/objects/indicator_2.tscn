@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bibbet3h7xcdn"]
+
+[ext_resource type="Script" uid="uid://wi5lhnavan3a" path="res://scripts/indicator.gd" id="1_fbkrx"]
+[ext_resource type="ArrayMesh" uid="uid://de76vqews28uq" path="res://mesh/single2.res" id="1_utvfw"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_utvfw"]
+radius = 0.05
+
+[node name="StaticBody3D" type="StaticBody3D"]
+script = ExtResource("1_fbkrx")
+
+[node name="Indicator2" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_utvfw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0251345, 0, 0)
+shape = SubResource("SphereShape3D_utvfw")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0251344, 0, 0)
+shape = SubResource("SphereShape3D_utvfw")

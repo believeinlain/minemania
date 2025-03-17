@@ -3,6 +3,10 @@ extends Node3D
 var mouse_down = false
 
 
+func _enter_tree():
+	look_at(Vector3.ZERO, Vector3.UP)
+
+
 func _input(event):
 	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_MIDDLE:
 		mouse_down = event.is_pressed()

@@ -1,32 +1,35 @@
 [gd_scene load_steps=21 format=3 uid="uid://b0or4r56t3evk"]
 
-[ext_resource type="PackedScene" uid="uid://blgudukan5c86" path="res://scenes/block.tscn" id="1_gqkak"]
-[ext_resource type="PackedScene" uid="uid://cm2ciikw25wbi" path="res://scenes/mine.tscn" id="2_vyjha"]
-[ext_resource type="Material" uid="uid://dtfy8f5eebt01" path="res://mat/indicator1.tres" id="3_7v3oe"]
+[ext_resource type="PackedScene" uid="uid://blgudukan5c86" path="res://scenes/objects/block.tscn" id="1_vyjha"]
+[ext_resource type="PackedScene" uid="uid://cm2ciikw25wbi" path="res://scenes/objects/mine.tscn" id="2_vyjha"]
 [ext_resource type="ArrayMesh" uid="uid://cgjggkykv7j62" path="res://mesh/mine.res" id="3_aefpu"]
-[ext_resource type="ArrayMesh" uid="uid://cyud6xun0wttp" path="res://mesh/single1.res" id="3_ra533"]
-[ext_resource type="ArrayMesh" uid="uid://de76vqews28uq" path="res://mesh/single2.res" id="4_7v3oe"]
 [ext_resource type="Material" uid="uid://ce3i6c4qbno0q" path="res://mat/mine_outline_green.tres" id="5_gyyo7"]
-[ext_resource type="Material" uid="uid://bphgi8w0lqw4d" path="res://mat/indicator2.tres" id="5_lbg2g"]
 [ext_resource type="Material" uid="uid://c06re4y4ftnk5" path="res://mat/mine_outline_red.tres" id="5_r5rt6"]
-[ext_resource type="PackedScene" uid="uid://dnd6p2r2srffw" path="res://scenes/indicator_5.tscn" id="10_vyjha"]
-[ext_resource type="Material" uid="uid://endhurtjxgt6" path="res://mat/indicator3.tres" id="11_665an"]
-[ext_resource type="ArrayMesh" uid="uid://bio47ponsx1x" path="res://mesh/single3.res" id="12_lkxaq"]
-[ext_resource type="Material" uid="uid://cfbconbdgwot1" path="res://mat/indicator4.tres" id="13_8lpvc"]
-[ext_resource type="ArrayMesh" uid="uid://y6yg4pk4imn" path="res://mesh/single4.res" id="14_2ae6o"]
-[ext_resource type="Script" uid="uid://cg1811me574rn" path="res://scripts/rotate_inner.gd" id="15_8lpvc"]
-[ext_resource type="ArrayMesh" uid="uid://cwiwjm316nn7l" path="res://mesh/ring.res" id="16_8lpvc"]
-[ext_resource type="Script" uid="uid://djt483hvp2ubs" path="res://scripts/rotate_orbit.gd" id="18_0le4o"]
+[ext_resource type="PackedScene" uid="uid://b1sfvihbcpded" path="res://scenes/objects/indicator_1.tscn" id="6_x7wln"]
+[ext_resource type="PackedScene" uid="uid://bibbet3h7xcdn" path="res://scenes/objects/indicator_2.tscn" id="7_4h4qn"]
+[ext_resource type="PackedScene" uid="uid://d1uihh6mn8k46" path="res://scenes/objects/indicator_3.tscn" id="8_fqq67"]
+[ext_resource type="PackedScene" uid="uid://ixsvxkwh5d2j" path="res://scenes/objects/indicator_4.tscn" id="9_46377"]
+[ext_resource type="PackedScene" uid="uid://dnd6p2r2srffw" path="res://scenes/objects/indicator_5.tscn" id="10_vyjha"]
+[ext_resource type="PackedScene" uid="uid://vpuqqffvakqb" path="res://scenes/objects/indicator_10.tscn" id="11_vyjha"]
+[ext_resource type="PackedScene" uid="uid://caadd5aq30e6p" path="res://scenes/objects/indicator_15.tscn" id="12_0le4o"]
+[ext_resource type="PackedScene" uid="uid://c3x3ajpe5nqpm" path="res://scenes/objects/indicator_20.tscn" id="13_x7wln"]
 [ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://mat/sky.tres" id="18_vyjha"]
+[ext_resource type="PackedScene" uid="uid://dxqunk50rrlac" path="res://scenes/objects/ring_1.tscn" id="18_x7wln"]
 [ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://mat/camera.tres" id="19_0le4o"]
+[ext_resource type="PackedScene" uid="uid://6a3tqm8r5p70" path="res://scenes/objects/ring_2.tscn" id="19_4h4qn"]
+[ext_resource type="PackedScene" uid="uid://crjod8buvkalc" path="res://scenes/objects/ring_3.tscn" id="20_fqq67"]
 [ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://mat/compositor.tres" id="20_x7wln"]
+[ext_resource type="PackedScene" uid="uid://hxpb0jyvu7k6" path="res://scenes/objects/ring_4.tscn" id="21_46377"]
 
-[node name="Root" type="Node3D"]
+[node name="Game" type="Node3D"]
 
-[node name="Block" parent="." instance=ExtResource("1_gqkak")]
+[node name="Block" parent="." instance=ExtResource("1_vyjha")]
 
 [node name="Mine" parent="." instance=ExtResource("2_vyjha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="Mine2" parent="." instance=ExtResource("2_vyjha")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.955016)
 
 [node name="MineRed" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
@@ -40,163 +43,51 @@ mesh = ExtResource("3_aefpu")
 skeleton = NodePath("../Block")
 surface_material_override/0 = ExtResource("5_gyyo7")
 
-[node name="Indicator1" type="MeshInstance3D" parent="."]
+[node name="Indicator1" parent="." instance=ExtResource("6_x7wln")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
-mesh = ExtResource("3_ra533")
-script = ExtResource("15_8lpvc")
 
-[node name="Indicator2" type="MeshInstance3D" parent="."]
+[node name="Indicator2" parent="." instance=ExtResource("7_4h4qn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
-mesh = ExtResource("4_7v3oe")
-script = ExtResource("15_8lpvc")
+value = 2
 
-[node name="Indicator3" type="MeshInstance3D" parent="."]
+[node name="Indicator3" parent="." instance=ExtResource("8_fqq67")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
-mesh = ExtResource("12_lkxaq")
-script = ExtResource("15_8lpvc")
+value = 3
 
-[node name="Indicator4" type="MeshInstance3D" parent="."]
+[node name="Indicator4" parent="." instance=ExtResource("9_46377")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
-mesh = ExtResource("14_2ae6o")
-script = ExtResource("15_8lpvc")
+value = 4
 
 [node name="Indicator5" parent="." instance=ExtResource("10_vyjha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
+value = 5
 
-[node name="Indicator10" type="Node3D" parent="."]
+[node name="Indicator10" parent="." instance=ExtResource("11_vyjha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+value = 10
 
-[node name="Ring" type="MeshInstance3D" parent="Indicator10"]
-mesh = ExtResource("16_8lpvc")
-skeleton = NodePath("../..")
-script = ExtResource("18_0le4o")
+[node name="Indicator15" parent="." instance=ExtResource("12_0le4o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -2)
+value = 15
 
-[node name="Indicator10" type="MeshInstance3D" parent="Indicator10"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
-mesh = ExtResource("4_7v3oe")
-skeleton = NodePath("../..")
-script = ExtResource("15_8lpvc")
+[node name="Indicator20" parent="." instance=ExtResource("13_x7wln")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
+value = 20
 
-[node name="Indicator6" type="Node3D" parent="."]
+[node name="Ring1" parent="." instance=ExtResource("18_x7wln")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -3)
 
-[node name="Indicator5" type="MeshInstance3D" parent="Indicator6"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../..")
-script = ExtResource("15_8lpvc")
-
-[node name="Ring" type="MeshInstance3D" parent="Indicator6"]
-mesh = ExtResource("16_8lpvc")
-skeleton = NodePath("../..")
-script = ExtResource("18_0le4o")
-
-[node name="Indicator1" type="MeshInstance3D" parent="Indicator6/Ring"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
-material_override = ExtResource("3_7v3oe")
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../../..")
-
-[node name="Indicator7" type="Node3D" parent="."]
+[node name="Ring2" parent="." instance=ExtResource("19_4h4qn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -4)
 
-[node name="Indicator5" type="MeshInstance3D" parent="Indicator7"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../..")
-script = ExtResource("15_8lpvc")
-
-[node name="Ring" type="MeshInstance3D" parent="Indicator7"]
-mesh = ExtResource("16_8lpvc")
-skeleton = NodePath("../..")
-script = ExtResource("18_0le4o")
-
-[node name="Indicator1" type="MeshInstance3D" parent="Indicator7/Ring"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("5_lbg2g")
-
-[node name="Indicator2" type="MeshInstance3D" parent="Indicator7/Ring"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("5_lbg2g")
-
-[node name="Indicator8" type="Node3D" parent="."]
+[node name="Ring3" parent="." instance=ExtResource("20_fqq67")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -5)
 
-[node name="Indicator5" type="MeshInstance3D" parent="Indicator8"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../..")
-script = ExtResource("15_8lpvc")
-
-[node name="Ring" type="MeshInstance3D" parent="Indicator8"]
-mesh = ExtResource("16_8lpvc")
-skeleton = NodePath("../..")
-script = ExtResource("18_0le4o")
-
-[node name="Indicator1" type="MeshInstance3D" parent="Indicator8/Ring"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("11_665an")
-
-[node name="Indicator2" type="MeshInstance3D" parent="Indicator8/Ring"]
-transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 0.259808, 0, 0.15)
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("11_665an")
-
-[node name="Indicator3" type="MeshInstance3D" parent="Indicator8/Ring"]
-transform = Transform3D(-0.5, 0, 0.866026, 0, 1, 0, -0.866026, 0, -0.5, -0.259808, 0, 0.15)
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("11_665an")
-
-[node name="Indicator9" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -6)
-
-[node name="Indicator5" type="MeshInstance3D" parent="Indicator9"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../..")
-script = ExtResource("15_8lpvc")
-
-[node name="Ring" type="MeshInstance3D" parent="Indicator9"]
-mesh = ExtResource("16_8lpvc")
-skeleton = NodePath("../..")
-script = ExtResource("18_0le4o")
-
-[node name="Indicator1" type="MeshInstance3D" parent="Indicator9/Ring"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("13_8lpvc")
-
-[node name="Indicator2" type="MeshInstance3D" parent="Indicator9/Ring"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
-material_override = ExtResource("13_8lpvc")
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("5_lbg2g")
-
-[node name="Indicator3" type="MeshInstance3D" parent="Indicator9/Ring"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.3, 0, 0)
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("13_8lpvc")
-
-[node name="Indicator4" type="MeshInstance3D" parent="Indicator9/Ring"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.3, 0, 0)
-material_override = ExtResource("13_8lpvc")
-mesh = ExtResource("3_ra533")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("5_lbg2g")
+[node name="Ring4" parent="." instance=ExtResource("21_46377")]
+transform = Transform3D(1, 0, 0, 0, 1, 3.55271e-15, 0, 0, 1, 1, 2.38419e-07, -6)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-1.8339e-08, -0.907734, 0.419547, -3.96783e-08, 0.419547, 0.907734, -1, -1.85092e-15, -4.37114e-08, 1.76145, 2.95244, -2.64295)
+transform = Transform3D(-1.8339e-08, -0.907734, 0.419547, -3.96783e-08, 0.419547, 0.907734, -1, 2.13163e-14, -4.37114e-08, 3.6315, 3.79153, -2.64295)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("18_vyjha")
@@ -206,3 +97,18 @@ compositor = ExtResource("20_x7wln")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.380086, -0.597633, 0.705953, 3.0629e-08, 0.763232, 0.646124, -0.924951, -0.245583, 0.290094, 2.64199, 2.05139, -1.296)
 shadow_enabled = true
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.461121, -0.278181, -0.842605, 0.533799, 0.845512, 0.0129843, 0.70882, -0.455769, 0.538376, -1.61239, 2.05139, 4.82832)
+light_energy = 0.3
+shadow_enabled = true
+
+[node name="Tooltip" type="Label" parent="."]
+offset_left = -23.0
+offset_top = -23.0
+offset_right = -2.0
+pivot_offset = Vector2(23, 23)
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "25"
+horizontal_alignment = 2
