@@ -1,12 +1,16 @@
-[gd_scene load_steps=21 format=3 uid="uid://b0or4r56t3evk"]
+[gd_scene load_steps=26 format=3 uid="uid://b0or4r56t3evk"]
 
+[ext_resource type="Script" uid="uid://5xrjxnip55vg" path="res://scripts/block.gd" id="1_0le4o"]
 [ext_resource type="PackedScene" uid="uid://blgudukan5c86" path="res://scenes/objects/block.tscn" id="1_vyjha"]
 [ext_resource type="PackedScene" uid="uid://cm2ciikw25wbi" path="res://scenes/objects/mine.tscn" id="2_vyjha"]
+[ext_resource type="ArrayMesh" uid="uid://b1a605br1hjw5" path="res://mesh/block.res" id="2_x7wln"]
 [ext_resource type="ArrayMesh" uid="uid://cgjggkykv7j62" path="res://mesh/mine.res" id="3_aefpu"]
+[ext_resource type="Material" uid="uid://bj43fn2fm5yti" path="res://mat/block_cracked.tres" id="4_fqq67"]
 [ext_resource type="Material" uid="uid://ce3i6c4qbno0q" path="res://mat/mine_outline_green.tres" id="5_gyyo7"]
 [ext_resource type="Material" uid="uid://c06re4y4ftnk5" path="res://mat/mine_outline_red.tres" id="5_r5rt6"]
 [ext_resource type="PackedScene" uid="uid://b1sfvihbcpded" path="res://scenes/objects/indicator_1.tscn" id="6_x7wln"]
 [ext_resource type="PackedScene" uid="uid://bibbet3h7xcdn" path="res://scenes/objects/indicator_2.tscn" id="7_4h4qn"]
+[ext_resource type="Texture2D" uid="uid://edtfbhcqafti" path="res://images/x.png" id="7_mesfn"]
 [ext_resource type="PackedScene" uid="uid://d1uihh6mn8k46" path="res://scenes/objects/indicator_3.tscn" id="8_fqq67"]
 [ext_resource type="PackedScene" uid="uid://ixsvxkwh5d2j" path="res://scenes/objects/indicator_4.tscn" id="9_46377"]
 [ext_resource type="PackedScene" uid="uid://dnd6p2r2srffw" path="res://scenes/objects/indicator_5.tscn" id="10_vyjha"]
@@ -21,15 +25,144 @@
 [ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://mat/compositor.tres" id="20_x7wln"]
 [ext_resource type="PackedScene" uid="uid://hxpb0jyvu7k6" path="res://scenes/objects/ring_4.tscn" id="21_46377"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_5uc8s"]
+
 [node name="Game" type="Node3D"]
 
 [node name="Block" parent="." instance=ExtResource("1_vyjha")]
 
+[node name="Block3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+script = ExtResource("1_0le4o")
+
+[node name="BlockCollider" type="CollisionShape3D" parent="Block3"]
+visible = false
+shape = SubResource("BoxShape3D_5uc8s")
+
+[node name="BlockMesh" type="MeshInstance3D" parent="Block3"]
+lod_bias = 2.0
+gi_mode = 0
+mesh = ExtResource("2_x7wln")
+skeleton = NodePath("../..")
+
+[node name="Mark" type="Node3D" parent="Block3"]
+
+[node name="Sprite3D" type="Sprite3D" parent="Block3/Mark"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.501)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
+[node name="Sprite3D6" type="Sprite3D" parent="Block3/Mark"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.501, 0)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
+[node name="Sprite3D5" type="Sprite3D" parent="Block3/Mark"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.501, 0)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Block3/Mark"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.501, 0, 0)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
+[node name="Sprite3D3" type="Sprite3D" parent="Block3/Mark"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -0.501)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
+[node name="Sprite3D4" type="Sprite3D" parent="Block3/Mark"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0.501, 0, 0)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
+[node name="Block2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+script = ExtResource("1_0le4o")
+
+[node name="BlockCollider" type="CollisionShape3D" parent="Block2"]
+visible = false
+shape = SubResource("BoxShape3D_5uc8s")
+
+[node name="BlockMesh" type="MeshInstance3D" parent="Block2"]
+lod_bias = 2.0
+gi_mode = 0
+mesh = ExtResource("2_x7wln")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_fqq67")
+
+[node name="Mark" type="Node3D" parent="Block2"]
+visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="Block2/Mark"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.501)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
+[node name="Sprite3D6" type="Sprite3D" parent="Block2/Mark"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.501, 0)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
+[node name="Sprite3D5" type="Sprite3D" parent="Block2/Mark"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.501, 0)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
+[node name="Sprite3D2" type="Sprite3D" parent="Block2/Mark"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.501, 0, 0)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
+[node name="Sprite3D3" type="Sprite3D" parent="Block2/Mark"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -0.501)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
+[node name="Sprite3D4" type="Sprite3D" parent="Block2/Mark"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0.501, 0, 0)
+pixel_size = 0.002
+double_sided = false
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("7_mesfn")
+
 [node name="Mine" parent="." instance=ExtResource("2_vyjha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
-
-[node name="Mine2" parent="." instance=ExtResource("2_vyjha")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.955016)
 
 [node name="MineRed" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)

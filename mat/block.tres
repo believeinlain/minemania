@@ -11,4 +11,4 @@ orm_texture = ExtResource("3_l78sc")
 normal_enabled = true
 normal_scale = 0.5
 normal_texture = ExtResource("2_04pmk")
-uv1_scale = Vector3(2, 2, 2)
+uv1_scale = Vector3(4, 4, 4)
