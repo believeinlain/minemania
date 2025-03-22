@@ -114,7 +114,7 @@ func disarm(index: Vector3i):
 		var cell := cells[idx]
 		if cell.contains_mine:
 			cell.instance_delete()
-			foreach_adjacent_facing(idx, func(idx): cells[idx].adjacent_mines -= 1)
+			foreach_adjacent_facing(idx, func(adj_idx): cells[adj_idx].adjacent_mines -= 1)
 			foreach_adjacent_facing(idx, update_indicator)
 			cell.contains_mine = false
 			reveal(idx)
