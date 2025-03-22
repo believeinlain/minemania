@@ -69,14 +69,14 @@ func reveal(index: Vector3i):
 			instance.crack()
 
 	if cell["contains_mine"]:
-		var mine = preload("res://scenes/objects/mine.tscn")
+		var mine = preload("res://objects/mine.tscn")
 		var instance = mine.instantiate()
 		instance.translate(cell["position"])
 		add_child(instance)
 	else:
 		var adjacent_mines = cell["adjacent_mines"]
 		if adjacent_mines > 0:
-			Indicator.spawn(self, adjacent_mines, cell["adjacent_cells"], cell["position"])
+			spawn_indicator(self, adjacent_mines, cell["adjacent_cells"], cell["position"])
 		else:
 			foreach_adjacent_facing(index, crack)
 
@@ -165,3 +165,26 @@ func foreach_adjacent_facing(index: Vector3i, f: Callable):
 			continue
 
 		f.call(adj_index)
+
+
+static func spawn_indicator(parent: Node, adjacent_mines, adjacent_cells, position: Vector3):
+	var res: PackedScene
+	match adjacent_mines:
+		1:
+			res = preload("res://objects/indicator_1.tscn")
+		2:
+			res = preload("res://objects/indicator_2.tscn")
+		3:
+			res = preload("res://objects/indicator_3.tscn")
+		4:
+			res = preload("res://objects/indicator_4.tscn")
+		5:
+			res = preload("res://objects/indicator_5.tscn")
+		6:
+			res = preload("res://objects/indicator_6.tscn")
+
+	var indicator: Indicator = res.instantiate()
+	indicator.translate(position)
+	indicator.value = adjacent_mines
+	indicator.max = adjacent_cells
+	parent.add_child(indicator)

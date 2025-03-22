@@ -134,11 +134,9 @@ value = 4
 
 [node name="Indicator5" parent="." instance=ExtResource("10_vyjha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
-value = 5
 
 [node name="Indicator6" parent="." instance=ExtResource("15_vyjha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -3)
-value = 6
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-1.8339e-08, -0.907734, 0.419547, -3.96783e-08, 0.419547, 0.907734, -1, 2.13163e-14, -4.37114e-08, 3.6315, 3.79153, -2.64295)

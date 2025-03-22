@@ -6,27 +6,6 @@ var max = 0
 var tooltip: Label
 
 
-static func spawn(parent: Node, adjacent_mines, adjacent_cells, position: Vector3):
-	var res: PackedScene
-	match adjacent_mines:
-		1:
-			res = preload("res://scenes/objects/indicator_1.tscn")
-		2:
-			res = preload("res://scenes/objects/indicator_2.tscn")
-		3:
-			res = preload("res://scenes/objects/indicator_3.tscn")
-		4:
-			res = preload("res://scenes/objects/indicator_4.tscn")
-		5:
-			res = preload("res://scenes/objects/indicator_5.tscn")
-
-	var indicator: Indicator = res.instantiate()
-	indicator.translate(position)
-	indicator.value = adjacent_mines
-	indicator.max = adjacent_cells
-	parent.add_child(indicator)
-
-
 func _enter_tree():
 	tooltip = get_node("/root/Game/Tooltip")
 

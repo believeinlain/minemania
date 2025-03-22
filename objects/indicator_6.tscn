@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://deq36uchgtj28"]
+[gd_scene load_steps=5 format=3 uid="uid://dnd6p2r2srffw"]
 
 [ext_resource type="Script" uid="uid://wi5lhnavan3a" path="res://scripts/indicator.gd" id="1_6t21a"]
 [ext_resource type="ArrayMesh" uid="uid://cyud6xun0wttp" path="res://mesh/single1.res" id="2_mb15r"]
-[ext_resource type="ArrayMesh" uid="uid://cwiwjm316nn7l" path="res://mesh/ring.res" id="3_6kvnb"]
-[ext_resource type="Script" uid="uid://djt483hvp2ubs" path="res://scripts/rotate_orbit.gd" id="4_u6ove"]
+[ext_resource type="PackedScene" uid="uid://dxqunk50rrlac" path="res://objects/ring_1.tscn" id="3_vlyte"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4relh"]
 radius = 0.15
@@ -19,6 +18,4 @@ skeleton = NodePath("../../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_4relh")
 
-[node name="Ring1" type="MeshInstance3D" parent="."]
-mesh = ExtResource("3_6kvnb")
-script = ExtResource("4_u6ove")
+[node name="Ring2" parent="." instance=ExtResource("3_vlyte")]
