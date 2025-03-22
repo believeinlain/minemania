@@ -2,6 +2,20 @@ class_name Minefield extends Node3D
 
 var cells: Dictionary
 var initialized = false
+var mouse_down = false
+
+
+func _input(event):
+	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_MIDDLE:
+		mouse_down = event.is_pressed()
+
+	if event is InputEventMouseMotion && mouse_down:
+		var delta = event.screen_relative
+		var delta_x = delta.x / get_viewport().size.x * TAU
+		var delta_y = delta.y / get_viewport().size.y * TAU
+
+		rotate(Vector3.UP, delta_x)
+		rotate(Vector3.RIGHT, delta_y)
 
 
 func _on_block_revealed(index: Vector3i):
@@ -62,10 +76,6 @@ func instance_call(index: Vector3i, name: String):
 		instance.call(name)
 
 
-func _on_cascade_timeout(index: Vector3i):
-	reveal(index)
-
-
 func reveal(index: Vector3i):
 	var reveal_sound = preload("res://audio/pop2.ogg")
 	var cell = cells[index]
@@ -107,7 +117,6 @@ func initialize(clicked: Vector3i):
 
 	for index in cells.keys():
 		foreach_adjacent_facing(index, func(adj_index): cells[index]["adjacent_cells"] += 1)
-		#print_debug(cells[index]["adjacent_cells"])
 
 	print_debug("Density=", density, " num_mines=", num_mines, "/", num_blocks)
 
@@ -147,23 +156,6 @@ func initialize(clicked: Vector3i):
 		mines_to_place -= 1
 
 	initialized = true
-
-
-func foreach_adjacent(index: Vector3i, f: Callable):
-	for x_off in [-1, 0, 1]:
-		for y_off in [-1, 0, 1]:
-			for z_off in [-1, 0, 1]:
-				# The block at index is not adjacent to itself
-				if x_off == 0 and y_off == 0 and z_off == 0:
-					continue
-
-				# Get a block adjacent to index
-				var adj_index = Vector3i(index.x + x_off, index.y + y_off, index.z + z_off)
-
-				if not cells.has(adj_index):
-					continue
-
-				f.call(adj_index)
 
 
 func foreach_adjacent_facing(index: Vector3i, f: Callable):

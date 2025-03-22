@@ -1,7 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://cm2ciikw25wbi"]
+[gd_scene load_steps=3 format=3 uid="uid://cm2ciikw25wbi"]
 
 [ext_resource type="ArrayMesh" uid="uid://cgjggkykv7j62" path="res://mesh/mine.res" id="1_kqr42"]
 
-[node name="Mine" type="MeshInstance3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_tgurg"]
+radius = 0.3
+
+[node name="StaticBody3D" type="StaticBody3D"]
+
+[node name="Mine" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_kqr42")
-skeleton = NodePath("../Block")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
+shape = SubResource("SphereShape3D_tgurg")
