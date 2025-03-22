@@ -1,7 +1,47 @@
-extends Node
+class_name Minefield extends Node3D
 
 var cells: Dictionary
 var initialized = false
+
+
+func _on_block_revealed(index: Vector3i):
+	if not initialized:
+		initialize(index)
+
+	reveal(index)
+
+
+func _on_block_marked(index: Vector3i, marked: bool):
+	cells[index]["marked"] = marked
+
+
+func _ready():
+	Global.block_revealed.connect(_on_block_revealed)
+	Global.block_marked.connect(_on_block_marked)
+
+	spawn()
+
+
+func spawn():
+	var camera = get_node("../CameraPivot/Camera3D")
+	var settings = get_node("../Settings")
+	var block = preload("res://objects/block.tscn")
+
+	var m_x = settings.field_size.x
+	var m_y = settings.field_size.y
+	var m_z = settings.field_size.z
+
+	for x in m_x:
+		for y in m_y:
+			for z in m_z:
+				var c_x = x - m_x / 2
+				var c_y = y - m_y / 2
+				var c_z = z - m_z / 2
+				var instance = block.instantiate()
+				instance.translate(Vector3(c_x, c_y, c_z))
+				instance.index = Vector3i(x, y, z)
+				add_child(instance)
+				init_cell(instance.index, instance)
 
 
 func init_cell(index: Vector3i, instance: Node3D):
@@ -16,16 +56,10 @@ func init_cell(index: Vector3i, instance: Node3D):
 	}
 
 
-func _on_block_revealed(index: Vector3i):
-	if not initialized:
-		initialize(index)
-
-	reveal(index)
-
-
-func _on_block_marked(index: Vector3i, marked: bool):
-	cells[index]["marked"] = marked
-	print_debug("Marked: ", index, ", ", marked)
+func instance_call(index: Vector3i, name: String):
+	var instance: Object = cells[index]["instance"]
+	if instance != null:
+		instance.call(name)
 
 
 func _on_cascade_timeout(index: Vector3i):
@@ -47,26 +81,8 @@ func reveal(index: Vector3i):
 	sound_player.play()
 	# TODO: Remove stream player after done playing!
 
-	if not cell["instance"] == null:
-		cell["instance"].queue_free()
-		cell["instance"] = null
-
-	var cascade = func(index):
-		# I think we don't want cascade?
-		return
-		if not cells[index]["revealed"]:
-			cell["revealed"] = true
-			var timer = Timer.new()
-			timer.autostart = true
-			timer.one_shot = true
-			timer.wait_time = randf_range(0.2, 0.5)
-			timer.timeout.connect(func(): _on_cascade_timeout(index))
-			add_child(timer)
-
-	var crack = func(index):
-		var instance = cells[index]["instance"]
-		if not instance == null:
-			instance.crack()
+	instance_call(index, "delete")
+	cell["instance"] = null
 
 	if cell["contains_mine"]:
 		var mine = preload("res://objects/mine.tscn")
@@ -78,7 +94,7 @@ func reveal(index: Vector3i):
 		if adjacent_mines > 0:
 			spawn_indicator(self, adjacent_mines, cell["adjacent_cells"], cell["position"])
 		else:
-			foreach_adjacent_facing(index, crack)
+			foreach_adjacent_facing(index, func(index): instance_call(index, "crack"))
 
 
 func initialize(clicked: Vector3i):
@@ -186,5 +202,4 @@ static func spawn_indicator(parent: Node, adjacent_mines, adjacent_cells, positi
 	var indicator: Indicator = res.instantiate()
 	indicator.translate(position)
 	indicator.value = adjacent_mines
-	indicator.max = adjacent_cells
 	parent.add_child(indicator)

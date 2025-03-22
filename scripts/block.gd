@@ -1,34 +1,25 @@
-extends CollisionObject3D
+class_name Block extends CollisionObject3D
 
 var index: Vector3i
 var marked = false
 
-signal block_revealed(index: Vector3i)
-signal block_marked(index: Vector3i, marked: bool)
-
-
-func _enter_tree():
-	var minefield = get_node("/root/Game/Minefield")
-	if minefield == null:
-		print_debug("Minefield not instantiated!")
-		return
-
-	connect("block_revealed", minefield._on_block_revealed)
-	connect("block_marked", minefield._on_block_marked)
-
 
 func _input_event(
-	camera: Camera3D, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int
+	_camera: Camera3D,
+	event: InputEvent,
+	_event_position: Vector3,
+	_normal: Vector3,
+	_shape_idx: int
 ):
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if not marked:
-				block_revealed.emit(index)
+				Global.block_revealed.emit(index)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			mark()
+			toggle_mark()
 
 
-func mark():
+func toggle_mark():
 	var mark = get_node("Mark")
 	if not marked:
 		marked = true
@@ -37,9 +28,13 @@ func mark():
 		marked = false
 		mark.visible = false
 
-	block_marked.emit(index, marked)
+	Global.block_marked.emit(index, marked)
 
 
 func crack():
 	var mesh: MeshInstance3D = get_node("BlockMesh")
 	mesh.set_surface_override_material(0, preload("res://mat/block_cracked.tres"))
+
+
+func delete():
+	queue_free()

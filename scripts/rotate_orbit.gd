@@ -1,7 +1,7 @@
 extends Node3D
 
-var speed = -0.05
+const SPEED = -3.0
 
 
 func _physics_process(delta):
-	rotate_y(speed)
+	rotate_y(SPEED * delta)
