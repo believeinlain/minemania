@@ -44,6 +44,9 @@ func _input_event(
 	if event is InputEventMouseMotion:
 		tooltip.position = event.position - tooltip.pivot_offset
 		tooltip.visible = true
+	elif event is InputEventMouseButton:
+		if event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
+			Global.indicator_clicked.emit(index)
 
 
 func _physics_process(delta):

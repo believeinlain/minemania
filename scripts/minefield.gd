@@ -40,10 +40,25 @@ func _on_indicator_mouseover(index: Vector3i, value: int, mouseover: bool):
 	foreach_adjacent_facing(index, func(i): block_call(i, "highlight", [value, mouseover]))
 
 
+func _on_indicator_clicked(index: Vector3i):
+	var all_true_marked = {"value": true}
+
+	var check = func(idx):
+		if !cells[idx]["revealed"] and cells[idx]["contains_mine"]:
+			if !cells[idx]["marked"]:
+				all_true_marked["value"] = false
+
+	foreach_adjacent_facing(index, check)
+	if all_true_marked["value"]:
+		print_debug("Disarming")
+		disarm(index)
+
+
 func _ready():
 	Global.block_revealed.connect(_on_block_revealed)
 	Global.block_marked.connect(_on_block_marked)
 	Global.indicator_mouseover.connect(_on_indicator_mouseover)
+	Global.indicator_clicked.connect(_on_indicator_clicked)
 
 	spawn()
 
@@ -86,19 +101,12 @@ func block_call(index: Vector3i, method: String, args = []):
 
 
 func reveal(index: Vector3i):
-	var reveal_sound = preload("res://audio/pop2.ogg")
 	var cell = cells[index]
 	if cell["revealed"]:
 		return
 
 	cell["revealed"] = true
 	#print_debug("Revealed: ", cell, " at ", index)
-	var sound_player = AudioStreamPlayer3D.new()
-	add_child(sound_player)
-	sound_player.stream = reveal_sound
-	sound_player.position = cell["position"]
-	sound_player.play()
-	# TODO: Remove stream player after done playing!
 
 	block_call(index, "delete")
 	cell["block"] = null
@@ -114,6 +122,16 @@ func reveal(index: Vector3i):
 			spawn_indicator(index)
 		else:
 			foreach_adjacent_facing(index, func(i): block_call(i, "crack"))
+
+
+func disarm(index: Vector3i):
+	var delete_block = func(idx):
+		block_call(idx, "delete")
+		cells[idx]["block"] = null
+
+	foreach_adjacent_facing(index, delete_block)
+
+	# TODO: decrement indicators and add new indicator in spot
 
 
 func initialize(clicked: Vector3i):
