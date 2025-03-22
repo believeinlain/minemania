@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b0or4r56t3evk"]
+[gd_scene load_steps=29 format=3 uid="uid://b0or4r56t3evk"]
 
 [ext_resource type="Script" uid="uid://5xrjxnip55vg" path="res://scripts/block.gd" id="1_0le4o"]
 [ext_resource type="PackedScene" uid="uid://blgudukan5c86" path="res://scenes/objects/block.tscn" id="1_vyjha"]
@@ -24,76 +24,23 @@
 [ext_resource type="PackedScene" uid="uid://crjod8buvkalc" path="res://scenes/objects/ring_3.tscn" id="20_fqq67"]
 [ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://mat/compositor.tres" id="20_x7wln"]
 [ext_resource type="PackedScene" uid="uid://hxpb0jyvu7k6" path="res://scenes/objects/ring_4.tscn" id="21_46377"]
+[ext_resource type="Material" uid="uid://dio0hcas4k5ps" path="res://mat/mark.tres" id="25_4ktgo"]
+[ext_resource type="Material" uid="uid://dtfy8f5eebt01" path="res://mat/indicator1.tres" id="26_4osje"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5uc8s"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4osje"]
+material = ExtResource("25_4ktgo")
 
 [node name="Game" type="Node3D"]
 
 [node name="Block" parent="." instance=ExtResource("1_vyjha")]
 
-[node name="Block3" type="StaticBody3D" parent="."]
+[node name="Block4" parent="." instance=ExtResource("1_vyjha")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="Block3" parent="." instance=ExtResource("1_vyjha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
-script = ExtResource("1_0le4o")
-
-[node name="BlockCollider" type="CollisionShape3D" parent="Block3"]
-visible = false
-shape = SubResource("BoxShape3D_5uc8s")
-
-[node name="BlockMesh" type="MeshInstance3D" parent="Block3"]
-lod_bias = 2.0
-gi_mode = 0
-mesh = ExtResource("2_x7wln")
-skeleton = NodePath("../..")
-
-[node name="Mark" type="Node3D" parent="Block3"]
-
-[node name="Sprite3D" type="Sprite3D" parent="Block3/Mark"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.501)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
-
-[node name="Sprite3D6" type="Sprite3D" parent="Block3/Mark"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.501, 0)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
-
-[node name="Sprite3D5" type="Sprite3D" parent="Block3/Mark"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.501, 0)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
-
-[node name="Sprite3D2" type="Sprite3D" parent="Block3/Mark"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.501, 0, 0)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
-
-[node name="Sprite3D3" type="Sprite3D" parent="Block3/Mark"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -0.501)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
-
-[node name="Sprite3D4" type="Sprite3D" parent="Block3/Mark"]
-transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0.501, 0, 0)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
 
 [node name="Block2" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
@@ -245,3 +192,12 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "25"
 horizontal_alignment = 2
+
+[node name="Mark" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.001, 0, 0, 0, 1.001, 0, 0, 0, 1.001, 0, 0, 1)
+mesh = SubResource("BoxMesh_4osje")
+
+[node name="Highlight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.001, 0, 0, 0, 1.001, 0, 0, 0, 1.001, -1, 0, 0)
+mesh = SubResource("BoxMesh_4osje")
+surface_material_override/0 = ExtResource("26_4osje")

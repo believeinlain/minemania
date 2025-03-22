@@ -1,6 +1,7 @@
 extends Node3D
 
 var mouse_down = false
+@export var minefield: Node3D
 
 
 func _enter_tree():
@@ -18,12 +19,8 @@ func _input(event):
 		var parent = get_parent_node_3d()
 		var tilt = parent.basis.y.dot(Vector3.UP)
 
-		if tilt > 0:
-			parent.rotate_y(-delta_x)
-		else:
-			parent.rotate_y(delta_x)
-
-		parent.rotate(parent.basis.x, -delta_y)
+		minefield.rotate(parent.basis.y, delta_x)
+		minefield.rotate(parent.basis.x, delta_y)
 
 		tilt = parent.basis.y.dot(Vector3.UP)
 		if tilt > 0.01:
