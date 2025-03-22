@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Sweeper 3D"
+config/name="MineMania"
 run/main_scene="uid://dly2fc31c4kj5"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://images/icon.svg"
+config/icon="uid://b2gvldymuy4eu"
 
 [display]
 
