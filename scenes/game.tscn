@@ -21,6 +21,7 @@ script = ExtResource("2_iywne")
 
 [node name="Minefield" type="Node3D" parent="."]
 script = ExtResource("6_p57ef")
+indicator_scale = 1.5
 field_size = Vector3i(5, 5, 5)
 
 [node name="Tooltip" type="Label" parent="."]
