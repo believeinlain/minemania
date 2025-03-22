@@ -37,6 +37,6 @@ func crack():
 
 
 func highlight(value: int, mouseover: bool):
-	var highlight: MeshInstance3D = get_node("Highlight")
-	highlight.visible = mouseover
-	highlight.set_surface_override_material(0, Indicator.get_mat(value))
+	var highlight_mesh: MeshInstance3D = get_node("Highlight")
+	highlight_mesh.visible = mouseover
+	highlight_mesh.set_surface_override_material(0, Indicator.get_mat(value))

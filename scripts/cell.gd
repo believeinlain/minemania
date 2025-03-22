@@ -7,10 +7,10 @@ var revealed = false
 var marked = false
 
 
-static func create(instance: Node3D) -> Cell:
+static func create(new_instance: Node3D) -> Cell:
 	var cell = Cell.new()
-	cell.instance = instance
-	cell.translate(instance.position)
+	cell.instance = new_instance
+	cell.translate(new_instance.position)
 	return cell
 
 

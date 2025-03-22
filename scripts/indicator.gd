@@ -6,8 +6,8 @@ const SPEED = 1.8
 var tooltip: Label
 
 
-static func get_mat(value) -> Material:
-	match value:
+static func get_mat(ivalue) -> Material:
+	match ivalue:
 		1:
 			return preload("res://mat/indicator_1.tres")
 		2:
