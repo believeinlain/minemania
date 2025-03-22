@@ -37,7 +37,6 @@ func _ready():
 
 
 func spawn():
-	var camera = get_node("../CameraPivot/Camera3D")
 	var settings = get_node("../Settings")
 	var block = preload("res://objects/block.tscn")
 
@@ -63,17 +62,16 @@ func init_cell(index: Vector3i, instance: Node3D):
 		"instance": instance,
 		"position": instance.position,
 		"adjacent_mines": 0,
-		"adjacent_cells": 0,
 		"contains_mine": false,
 		"revealed": false,
 		"marked": false,
 	}
 
 
-func instance_call(index: Vector3i, name: String):
+func instance_call(index: Vector3i, method: String):
 	var instance: Object = cells[index]["instance"]
 	if instance != null:
-		instance.call(name)
+		instance.call(method)
 
 
 func reveal(index: Vector3i):
@@ -102,9 +100,9 @@ func reveal(index: Vector3i):
 	else:
 		var adjacent_mines = cell["adjacent_mines"]
 		if adjacent_mines > 0:
-			spawn_indicator(self, adjacent_mines, cell["adjacent_cells"], cell["position"])
+			spawn_indicator(self, adjacent_mines, cell["position"])
 		else:
-			foreach_adjacent_facing(index, func(index): instance_call(index, "crack"))
+			foreach_adjacent_facing(index, func(i): instance_call(i, "crack"))
 
 
 func initialize(clicked: Vector3i):
@@ -114,9 +112,6 @@ func initialize(clicked: Vector3i):
 
 	var num_blocks = size.x * size.y * size.z
 	var num_mines: int = num_blocks * density
-
-	for index in cells.keys():
-		foreach_adjacent_facing(index, func(adj_index): cells[index]["adjacent_cells"] += 1)
 
 	print_debug("Density=", density, " num_mines=", num_mines, "/", num_blocks)
 
@@ -129,7 +124,7 @@ func initialize(clicked: Vector3i):
 			safe_cells = {clicked: null}
 		Settings.MineSafety.CLEAR:
 			safe_cells = {clicked: null}
-			foreach_adjacent_facing(clicked, func(adj_index): safe_cells[adj_index] = null)
+			foreach_adjacent_facing(clicked, func(adj_idx): safe_cells[adj_idx] = null)
 
 	print_debug("Safe cells: ", safe_cells.keys())
 
@@ -150,8 +145,6 @@ func initialize(clicked: Vector3i):
 		foreach_adjacent_facing(
 			mine_index, func(adj_index): cells[adj_index]["adjacent_mines"] += 1
 		)
-
-		#print_debug("Placed mine at ", mine_index, ", ", mines_to_place, " remaining")
 
 		mines_to_place -= 1
 
@@ -175,7 +168,7 @@ func foreach_adjacent_facing(index: Vector3i, f: Callable):
 		f.call(adj_index)
 
 
-static func spawn_indicator(parent: Node, adjacent_mines, adjacent_cells, position: Vector3):
+static func spawn_indicator(parent: Node, adjacent_mines: int, at: Vector3):
 	var res: PackedScene
 	match adjacent_mines:
 		1:
@@ -192,6 +185,6 @@ static func spawn_indicator(parent: Node, adjacent_mines, adjacent_cells, positi
 			res = preload("res://objects/indicator_6.tscn")
 
 	var indicator: Indicator = res.instantiate()
-	indicator.translate(position)
+	indicator.translate(at)
 	indicator.value = adjacent_mines
 	parent.add_child(indicator)
