@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b0or4r56t3evk"]
+[gd_scene load_steps=22 format=3 uid="uid://b0or4r56t3evk"]
 
 [ext_resource type="Script" uid="uid://5xrjxnip55vg" path="res://scripts/block.gd" id="1_0le4o"]
 [ext_resource type="PackedScene" uid="uid://blgudukan5c86" path="res://objects/block.tscn" id="1_vyjha"]
@@ -10,21 +10,20 @@
 [ext_resource type="Material" uid="uid://c06re4y4ftnk5" path="res://mat/mine_outline_red.tres" id="5_r5rt6"]
 [ext_resource type="PackedScene" uid="uid://b1sfvihbcpded" path="res://objects/indicator_1.tscn" id="6_x7wln"]
 [ext_resource type="PackedScene" uid="uid://bibbet3h7xcdn" path="res://objects/indicator_2.tscn" id="7_4h4qn"]
-[ext_resource type="Texture2D" uid="uid://edtfbhcqafti" path="res://mat/x.png" id="7_mesfn"]
 [ext_resource type="PackedScene" uid="uid://d1uihh6mn8k46" path="res://objects/indicator_3.tscn" id="8_fqq67"]
 [ext_resource type="PackedScene" uid="uid://ixsvxkwh5d2j" path="res://objects/indicator_4.tscn" id="9_46377"]
 [ext_resource type="PackedScene" uid="uid://deq36uchgtj28" path="res://objects/indicator_5.tscn" id="10_vyjha"]
 [ext_resource type="PackedScene" uid="uid://dnd6p2r2srffw" path="res://objects/indicator_6.tscn" id="15_vyjha"]
-[ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://mat/sky.tres" id="18_vyjha"]
-[ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://mat/camera.tres" id="19_0le4o"]
-[ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://mat/compositor.tres" id="20_x7wln"]
+[ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://env/sky.tres" id="18_vyjha"]
+[ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://env/camera.tres" id="19_0le4o"]
+[ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://env/compositor.tres" id="20_x7wln"]
 [ext_resource type="Material" uid="uid://dio0hcas4k5ps" path="res://mat/mark.tres" id="25_4ktgo"]
 [ext_resource type="Material" uid="uid://dtfy8f5eebt01" path="res://mat/indicator1.tres" id="26_4osje"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_5uc8s"]
-
 [sub_resource type="BoxMesh" id="BoxMesh_4osje"]
 material = ExtResource("25_4ktgo")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5uc8s"]
 
 [node name="Game" type="Node3D"]
 
@@ -33,8 +32,19 @@ material = ExtResource("25_4ktgo")
 [node name="Block4" parent="." instance=ExtResource("1_vyjha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
 
+[node name="Highlight2" type="MeshInstance3D" parent="Block4"]
+transform = Transform3D(1.001, 0, 0, 0, 1.001, 0, 0, 0, 1.001, 0, 0, 0)
+mesh = SubResource("BoxMesh_4osje")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("26_4osje")
+
 [node name="Block3" parent="." instance=ExtResource("1_vyjha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="Mark2" type="MeshInstance3D" parent="Block3"]
+transform = Transform3D(1.001, 0, 0, 0, 1.001, 0, 0, 0, 1.001, 0, 0, 0)
+mesh = SubResource("BoxMesh_4osje")
+skeleton = NodePath("../..")
 
 [node name="Block2" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
@@ -50,57 +60,6 @@ gi_mode = 0
 mesh = ExtResource("2_x7wln")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("4_fqq67")
-
-[node name="Mark" type="Node3D" parent="Block2"]
-visible = false
-
-[node name="Sprite3D" type="Sprite3D" parent="Block2/Mark"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.501)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
-
-[node name="Sprite3D6" type="Sprite3D" parent="Block2/Mark"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.501, 0)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
-
-[node name="Sprite3D5" type="Sprite3D" parent="Block2/Mark"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.501, 0)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
-
-[node name="Sprite3D2" type="Sprite3D" parent="Block2/Mark"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.501, 0, 0)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
-
-[node name="Sprite3D3" type="Sprite3D" parent="Block2/Mark"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -0.501)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
-
-[node name="Sprite3D4" type="Sprite3D" parent="Block2/Mark"]
-transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0.501, 0, 0)
-pixel_size = 0.002
-double_sided = false
-alpha_cut = 1
-texture_filter = 0
-texture = ExtResource("7_mesfn")
 
 [node name="Mine" parent="." instance=ExtResource("2_vyjha")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
@@ -150,10 +109,6 @@ compositor = ExtResource("20_x7wln")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.380086, -0.597633, 0.705953, 3.0629e-08, 0.763232, 0.646124, -0.924951, -0.245583, 0.290094, 2.64199, 2.05139, -1.296)
-shadow_enabled = true
-
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.461121, -0.278181, -0.842605, 0.533799, 0.845512, 0.0129843, 0.70882, -0.455769, 0.538376, -1.61239, 2.05139, 4.82832)
 light_energy = 0.3
 shadow_enabled = true
 
@@ -166,12 +121,3 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "25"
 horizontal_alignment = 2
-
-[node name="Mark" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.001, 0, 0, 0, 1.001, 0, 0, 0, 1.001, 0, 0, 1)
-mesh = SubResource("BoxMesh_4osje")
-
-[node name="Highlight" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.001, 0, 0, 0, 1.001, 0, 0, 0, 1.001, -1, 0, 0)
-mesh = SubResource("BoxMesh_4osje")
-surface_material_override/0 = ExtResource("26_4osje")
