@@ -36,10 +36,6 @@ func crack():
 	mesh.set_surface_override_material(0, preload("res://mat/block_cracked.tres"))
 
 
-func delete():
-	queue_free()
-
-
 func highlight(value: int, mouseover: bool):
 	var highlight: MeshInstance3D = get_node("Highlight")
 	highlight.visible = mouseover

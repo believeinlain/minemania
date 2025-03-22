@@ -2,7 +2,7 @@ class_name Minefield extends Node3D
 
 enum MineSafety { NONE, SAFE, CLEAR }
 
-var cells: Dictionary
+var cells: Dictionary[Vector3i, Cell]
 var initialized = false
 var mouse_down = false
 @export var indicator_scale = 1.0
@@ -33,24 +33,23 @@ func _on_block_revealed(index: Vector3i):
 
 
 func _on_block_marked(index: Vector3i, marked: bool):
-	cells[index]["marked"] = marked
+	cells[index].marked = marked
 
 
 func _on_indicator_mouseover(index: Vector3i, value: int, mouseover: bool):
-	foreach_adjacent_facing(index, func(i): block_call(i, "highlight", [value, mouseover]))
+	foreach_adjacent_facing(index, func(i): cells[i].instance_call("highlight", [value, mouseover]))
 
 
 func _on_indicator_clicked(index: Vector3i):
 	var all_true_marked = {"value": true}
 
 	var check = func(idx):
-		if !cells[idx]["revealed"] and cells[idx]["contains_mine"]:
-			if !cells[idx]["marked"]:
+		if !cells[idx].revealed and cells[idx].contains_mine:
+			if !cells[idx].marked:
 				all_true_marked["value"] = false
 
 	foreach_adjacent_facing(index, check)
 	if all_true_marked["value"]:
-		print_debug("Disarming")
 		disarm(index)
 
 
@@ -80,65 +79,52 @@ func spawn():
 				instance.translate(Vector3(c_x, c_y, c_z))
 				instance.index = Vector3i(x, y, z)
 				add_child(instance)
-				init_cell(instance.index, instance)
-
-
-func init_cell(index: Vector3i, block: Node3D):
-	cells[index] = {
-		"block": block,
-		"position": block.position,
-		"adjacent_mines": 0,
-		"contains_mine": false,
-		"revealed": false,
-		"marked": false,
-	}
-
-
-func block_call(index: Vector3i, method: String, args = []):
-	var block: Object = cells[index]["block"]
-	if block != null:
-		block.callv(method, args)
+				cells[instance.index] = Cell.create(instance)
 
 
 func reveal(index: Vector3i):
-	var cell = cells[index]
-	if cell["revealed"]:
+	var cell := cells[index]
+	if cell.revealed:
 		return
 
-	cell["revealed"] = true
-	#print_debug("Revealed: ", cell, " at ", index)
+	cell.revealed = true
+	cell.instance_delete()
 
-	block_call(index, "delete")
-	cell["block"] = null
-
-	if cell["contains_mine"]:
+	if cell.contains_mine:
 		var mine = preload("res://objects/mine.tscn")
 		var instance = mine.instantiate()
-		instance.translate(cell["position"])
+		instance.translate(cell.position)
 		add_child(instance)
 	else:
-		var adjacent_mines = cell["adjacent_mines"]
-		if adjacent_mines > 0:
-			spawn_indicator(index)
+		if cell.adjacent_mines > 0:
+			cell.instance = spawn_indicator(index)
 		else:
-			foreach_adjacent_facing(index, func(i): block_call(i, "crack"))
+			foreach_adjacent_facing(index, func(i): cells[i].instance_call("crack"))
 
 
 func disarm(index: Vector3i):
-	var delete_block = func(idx):
-		block_call(idx, "delete")
-		cells[idx]["block"] = null
+	var update_indicator = func(idx):
+		var cell := cells[idx]
+		if cell.instance is Indicator:
+			cell.instance_delete()
+			if cell.adjacent_mines > 0:
+				cell.instance = spawn_indicator(idx)
 
-	foreach_adjacent_facing(index, delete_block)
+	var disarm_block = func(idx):
+		var cell := cells[idx]
+		if cell.contains_mine:
+			cell.instance_delete()
+			foreach_adjacent_facing(idx, func(idx): cells[idx].adjacent_mines -= 1)
+			foreach_adjacent_facing(idx, update_indicator)
+			cell.contains_mine = false
+			reveal(idx)
 
-	# TODO: decrement indicators and add new indicator in spot
+	foreach_adjacent_facing(index, disarm_block)
 
 
 func initialize(clicked: Vector3i):
 	var num_blocks = field_size.x * field_size.y * field_size.z
 	var num_mines: int = num_blocks * mine_density
-
-	print_debug("Density=", mine_density, " num_mines=", num_mines, "/", num_blocks)
 
 	# Determine which cells cannot contain mines
 	var safe_cells: Dictionary
@@ -151,10 +137,9 @@ func initialize(clicked: Vector3i):
 			safe_cells = {clicked: null}
 			foreach_adjacent_facing(clicked, func(adj_idx): safe_cells[adj_idx] = null)
 
-	print_debug("Safe cells: ", safe_cells.keys())
-
 	# Every cell that is not guaranteed to be safe might contain a mine
 	var unsafe_cells: Array = cells.keys().filter(func(index): return !safe_cells.has(index))
+	#seed(314)
 	unsafe_cells.shuffle()
 
 	# Place mines
@@ -164,12 +149,10 @@ func initialize(clicked: Vector3i):
 		if mine_index == null:
 			break
 
-		cells[mine_index]["contains_mine"] = true
+		cells[mine_index].contains_mine = true
 
 		# Increment the number of adjacent mines in each cell next to a new mine
-		foreach_adjacent_facing(
-			mine_index, func(adj_index): cells[adj_index]["adjacent_mines"] += 1
-		)
+		foreach_adjacent_facing(mine_index, func(adj_index): cells[adj_index].adjacent_mines += 1)
 
 		mines_to_place -= 1
 
@@ -193,10 +176,8 @@ func foreach_adjacent_facing(index: Vector3i, f: Callable):
 		f.call(adj_index)
 
 
-func spawn_indicator(index):
-	var adjacent_mines = cells[index]["adjacent_mines"]
-	var pos = cells[index]["position"]
-
+func spawn_indicator(index) -> Node:
+	var adjacent_mines = cells[index].adjacent_mines
 	var res: PackedScene
 	match adjacent_mines:
 		1:
@@ -212,9 +193,11 @@ func spawn_indicator(index):
 		6:
 			res = preload("res://objects/indicator_6.tscn")
 
-	var indicator: Indicator = res.instantiate()
-	indicator.translate(pos)
+	var indicator := res.instantiate()
+	indicator.translate(cells[index].position)
 	indicator.scale_object_local(Vector3.ONE * indicator_scale)
 	indicator.value = adjacent_mines
 	indicator.index = index
 	add_child(indicator)
+
+	return indicator

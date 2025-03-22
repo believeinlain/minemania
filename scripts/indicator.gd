@@ -24,6 +24,10 @@ func _enter_tree():
 	tooltip = get_node("/root/Game/Tooltip")
 
 
+func _exit_tree():
+	tooltip.visible = false
+
+
 func _mouse_enter():
 	tooltip.text = "%s" % value
 	Global.indicator_mouseover.emit(index, value, true)
