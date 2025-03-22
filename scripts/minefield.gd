@@ -1,8 +1,15 @@
 class_name Minefield extends Node3D
 
+enum MineSafety { NONE, SAFE, CLEAR }
+
 var cells: Dictionary
 var initialized = false
 var mouse_down = false
+@export var indicator_scale = 1.0
+
+@export var field_size: Vector3i = Vector3i(3, 3, 3)
+@export var mine_density: float = 0.2
+@export var safety: MineSafety = MineSafety.SAFE
 
 
 func _input(event):
@@ -29,20 +36,24 @@ func _on_block_marked(index: Vector3i, marked: bool):
 	cells[index]["marked"] = marked
 
 
+func _on_indicator_mouseover(index: Vector3i, value: int, mouseover: bool):
+	foreach_adjacent_facing(index, func(i): block_call(i, "highlight", [value, mouseover]))
+
+
 func _ready():
 	Global.block_revealed.connect(_on_block_revealed)
 	Global.block_marked.connect(_on_block_marked)
+	Global.indicator_mouseover.connect(_on_indicator_mouseover)
 
 	spawn()
 
 
 func spawn():
-	var settings = get_node("../Settings")
 	var block = preload("res://objects/block.tscn")
 
-	var m_x = settings.field_size.x
-	var m_y = settings.field_size.y
-	var m_z = settings.field_size.z
+	var m_x = field_size.x
+	var m_y = field_size.y
+	var m_z = field_size.z
 
 	for x in m_x:
 		for y in m_y:
@@ -57,10 +68,10 @@ func spawn():
 				init_cell(instance.index, instance)
 
 
-func init_cell(index: Vector3i, instance: Node3D):
+func init_cell(index: Vector3i, block: Node3D):
 	cells[index] = {
-		"instance": instance,
-		"position": instance.position,
+		"block": block,
+		"position": block.position,
 		"adjacent_mines": 0,
 		"contains_mine": false,
 		"revealed": false,
@@ -68,10 +79,10 @@ func init_cell(index: Vector3i, instance: Node3D):
 	}
 
 
-func instance_call(index: Vector3i, method: String):
-	var instance: Object = cells[index]["instance"]
-	if instance != null:
-		instance.call(method)
+func block_call(index: Vector3i, method: String, args = []):
+	var block: Object = cells[index]["block"]
+	if block != null:
+		block.callv(method, args)
 
 
 func reveal(index: Vector3i):
@@ -89,8 +100,8 @@ func reveal(index: Vector3i):
 	sound_player.play()
 	# TODO: Remove stream player after done playing!
 
-	instance_call(index, "delete")
-	cell["instance"] = null
+	block_call(index, "delete")
+	cell["block"] = null
 
 	if cell["contains_mine"]:
 		var mine = preload("res://objects/mine.tscn")
@@ -100,29 +111,25 @@ func reveal(index: Vector3i):
 	else:
 		var adjacent_mines = cell["adjacent_mines"]
 		if adjacent_mines > 0:
-			spawn_indicator(self, adjacent_mines, cell["position"])
+			spawn_indicator(index)
 		else:
-			foreach_adjacent_facing(index, func(i): instance_call(i, "crack"))
+			foreach_adjacent_facing(index, func(i): block_call(i, "crack"))
 
 
 func initialize(clicked: Vector3i):
-	var settings = get_node("../Settings")
-	var size = settings.field_size
-	var density = settings.mine_density
+	var num_blocks = field_size.x * field_size.y * field_size.z
+	var num_mines: int = num_blocks * mine_density
 
-	var num_blocks = size.x * size.y * size.z
-	var num_mines: int = num_blocks * density
-
-	print_debug("Density=", density, " num_mines=", num_mines, "/", num_blocks)
+	print_debug("Density=", mine_density, " num_mines=", num_mines, "/", num_blocks)
 
 	# Determine which cells cannot contain mines
 	var safe_cells: Dictionary
-	match settings.safety:
-		Settings.MineSafety.NONE:
+	match safety:
+		MineSafety.NONE:
 			safe_cells = {}
-		Settings.MineSafety.SAFE:
+		MineSafety.SAFE:
 			safe_cells = {clicked: null}
-		Settings.MineSafety.CLEAR:
+		MineSafety.CLEAR:
 			safe_cells = {clicked: null}
 			foreach_adjacent_facing(clicked, func(adj_idx): safe_cells[adj_idx] = null)
 
@@ -168,7 +175,10 @@ func foreach_adjacent_facing(index: Vector3i, f: Callable):
 		f.call(adj_index)
 
 
-static func spawn_indicator(parent: Node, adjacent_mines: int, at: Vector3):
+func spawn_indicator(index):
+	var adjacent_mines = cells[index]["adjacent_mines"]
+	var pos = cells[index]["position"]
+
 	var res: PackedScene
 	match adjacent_mines:
 		1:
@@ -185,6 +195,8 @@ static func spawn_indicator(parent: Node, adjacent_mines: int, at: Vector3):
 			res = preload("res://objects/indicator_6.tscn")
 
 	var indicator: Indicator = res.instantiate()
-	indicator.translate(at)
+	indicator.translate(pos)
+	indicator.scale_object_local(Vector3.ONE * indicator_scale)
 	indicator.value = adjacent_mines
-	parent.add_child(indicator)
+	indicator.index = index
+	add_child(indicator)

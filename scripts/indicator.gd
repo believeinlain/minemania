@@ -6,6 +6,20 @@ const SPEED = 1.8
 var tooltip: Label
 
 
+static func get_mat(value) -> Material:
+	match value:
+		1:
+			return preload("res://mat/indicator_1.tres")
+		2:
+			return preload("res://mat/indicator_2.tres")
+		3:
+			return preload("res://mat/indicator_3.tres")
+		4:
+			return preload("res://mat/indicator_4.tres")
+		_:
+			return preload("res://mat/indicator_1.tres")
+
+
 func _enter_tree():
 	tooltip = get_node("/root/Game/Tooltip")
 

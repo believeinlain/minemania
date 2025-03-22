@@ -18,7 +18,7 @@
 [ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://env/camera.tres" id="19_0le4o"]
 [ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://env/compositor.tres" id="20_x7wln"]
 [ext_resource type="Material" uid="uid://dio0hcas4k5ps" path="res://mat/mark.tres" id="25_4ktgo"]
-[ext_resource type="Material" uid="uid://dtfy8f5eebt01" path="res://mat/indicator1.tres" id="26_4osje"]
+[ext_resource type="Material" uid="uid://dtfy8f5eebt01" path="res://mat/indicator_1.tres" id="26_4osje"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4osje"]
 material = ExtResource("25_4ktgo")

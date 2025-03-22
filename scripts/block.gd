@@ -38,3 +38,9 @@ func crack():
 
 func delete():
 	queue_free()
+
+
+func highlight(value: int, mouseover: bool):
+	var highlight: MeshInstance3D = get_node("Highlight")
+	highlight.visible = mouseover
+	highlight.set_surface_override_material(0, Indicator.get_mat(value))

@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dly2fc31c4kj5"]
+[gd_scene load_steps=6 format=3 uid="uid://dly2fc31c4kj5"]
 
 [ext_resource type="Script" uid="uid://e4drhg3yeqh0" path="res://scripts/camera.gd" id="2_iywne"]
 [ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://env/sky.tres" id="2_lbhrr"]
 [ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://env/camera.tres" id="3_iywne"]
 [ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://env/compositor.tres" id="4_p57ef"]
 [ext_resource type="Script" uid="uid://bs45o4r5tsbq3" path="res://scripts/minefield.gd" id="6_p57ef"]
-[ext_resource type="Script" uid="uid://cjhx3jneqwgs8" path="res://scripts/settings.gd" id="7_u5sy4"]
 
 [node name="Game" type="Node3D"]
 
@@ -22,11 +21,7 @@ script = ExtResource("2_iywne")
 
 [node name="Minefield" type="Node3D" parent="."]
 script = ExtResource("6_p57ef")
-
-[node name="Settings" type="Node" parent="."]
-script = ExtResource("7_u5sy4")
 field_size = Vector3i(5, 5, 5)
-safety = 2
 
 [node name="Tooltip" type="Label" parent="."]
 offset_left = -23.0
