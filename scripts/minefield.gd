@@ -44,6 +44,8 @@ func _on_indicator_clicked(index: Vector3i):
 	var all_true_marked = {"value": true}
 
 	var check = func(idx):
+		if cells[idx].contains_mine and cells[idx].revealed:
+			all_true_marked["value"] = false
 		if !cells[idx].revealed and cells[idx].contains_mine:
 			if !cells[idx].marked:
 				all_true_marked["value"] = false
@@ -118,6 +120,9 @@ func disarm(index: Vector3i):
 			foreach_adjacent_facing(idx, update_indicator)
 			cell.contains_mine = false
 			reveal(idx)
+			var disarmed_mine = preload("res://objects/mine_disarmed.tscn").instantiate()
+			disarmed_mine.translate(cell.position)
+			add_child(disarmed_mine)
 
 	foreach_adjacent_facing(index, disarm_block)
 

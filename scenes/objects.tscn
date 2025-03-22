@@ -6,16 +6,16 @@
 [ext_resource type="ArrayMesh" uid="uid://b1a605br1hjw5" path="res://mesh/block.res" id="2_x7wln"]
 [ext_resource type="ArrayMesh" uid="uid://cgjggkykv7j62" path="res://mesh/mine.res" id="3_aefpu"]
 [ext_resource type="Material" uid="uid://bj43fn2fm5yti" path="res://mat/block_cracked.tres" id="4_fqq67"]
-[ext_resource type="Material" uid="uid://ce3i6c4qbno0q" path="res://mat/mine_outline_green.tres" id="5_gyyo7"]
-[ext_resource type="Material" uid="uid://c06re4y4ftnk5" path="res://mat/mine_outline_red.tres" id="5_r5rt6"]
 [ext_resource type="PackedScene" uid="uid://b1sfvihbcpded" path="res://objects/indicator_1.tscn" id="6_x7wln"]
 [ext_resource type="PackedScene" uid="uid://bibbet3h7xcdn" path="res://objects/indicator_2.tscn" id="7_4h4qn"]
 [ext_resource type="PackedScene" uid="uid://d1uihh6mn8k46" path="res://objects/indicator_3.tscn" id="8_fqq67"]
 [ext_resource type="PackedScene" uid="uid://ixsvxkwh5d2j" path="res://objects/indicator_4.tscn" id="9_46377"]
+[ext_resource type="Material" uid="uid://tk52j8hklnu4" path="res://mat/mine.tres" id="9_gqkak"]
 [ext_resource type="PackedScene" uid="uid://deq36uchgtj28" path="res://objects/indicator_5.tscn" id="10_vyjha"]
 [ext_resource type="PackedScene" uid="uid://dnd6p2r2srffw" path="res://objects/indicator_6.tscn" id="15_vyjha"]
 [ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://env/sky.tres" id="18_vyjha"]
 [ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://env/camera.tres" id="19_0le4o"]
+[ext_resource type="PackedScene" uid="uid://betbvgaii2lsq" path="res://objects/mine_disarmed.tscn" id="19_vyjha"]
 [ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://env/compositor.tres" id="20_x7wln"]
 [ext_resource type="Material" uid="uid://dio0hcas4k5ps" path="res://mat/mark.tres" id="25_4ktgo"]
 [ext_resource type="Material" uid="uid://dtfy8f5eebt01" path="res://mat/indicator_1.tres" id="26_4osje"]
@@ -68,13 +68,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
 mesh = ExtResource("3_aefpu")
 skeleton = NodePath("../Block")
-surface_material_override/0 = ExtResource("5_r5rt6")
-
-[node name="MineGreen" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
-mesh = ExtResource("3_aefpu")
-skeleton = NodePath("../Block")
-surface_material_override/0 = ExtResource("5_gyyo7")
+surface_material_override/0 = ExtResource("9_gqkak")
 
 [node name="Indicator1" parent="." instance=ExtResource("6_x7wln")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
@@ -121,3 +115,6 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "25"
 horizontal_alignment = 2
+
+[node name="MineDisarmed" parent="." instance=ExtResource("19_vyjha")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)

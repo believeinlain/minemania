@@ -15,7 +15,7 @@ static func create(new_instance: Node3D) -> Cell:
 
 
 func instance_call(method: String, args = []):
-	if instance != null:
+	if instance != null and instance.has_method(method):
 		instance.callv(method, args)
 
 

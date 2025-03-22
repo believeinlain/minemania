@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://betbvgaii2lsq"]
+
+[ext_resource type="ArrayMesh" uid="uid://cgjggkykv7j62" path="res://mesh/mine.res" id="1_4u6db"]
+[ext_resource type="Script" uid="uid://drcpeihvybo3k" path="res://scripts/mine_disarmed.gd" id="1_f64vj"]
+[ext_resource type="Material" uid="uid://ce3i6c4qbno0q" path="res://mat/mine_outline_green.tres" id="2_4u6db"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tgurg"]
+radius = 0.3
+
+[node name="MineDisarmed" type="StaticBody3D"]
+script = ExtResource("1_f64vj")
+
+[node name="Mine" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_4u6db")
+surface_material_override/0 = ExtResource("2_4u6db")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
+shape = SubResource("SphereShape3D_tgurg")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cm2ciikw25wbi"]
+[gd_scene load_steps=4 format=3 uid="uid://cm2ciikw25wbi"]
 
 [ext_resource type="ArrayMesh" uid="uid://cgjggkykv7j62" path="res://mesh/mine.res" id="1_kqr42"]
+[ext_resource type="Material" uid="uid://c06re4y4ftnk5" path="res://mat/mine_outline_red.tres" id="2_ny6u0"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tgurg"]
 radius = 0.3
@@ -9,6 +10,7 @@ radius = 0.3
 
 [node name="Mine" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_kqr42")
+surface_material_override/0 = ExtResource("2_ny6u0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 visible = false
