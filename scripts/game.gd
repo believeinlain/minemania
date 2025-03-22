@@ -5,7 +5,7 @@ func _ready():
 	var camera = get_node("CameraPivot/Camera3D")
 	var settings = get_node("Settings")
 	var minefield = get_node("Minefield")
-	var block = preload("res://scenes/objects/block.tscn")
+	var block = preload("res://objects/block.tscn")
 
 	var m_x = settings.field_size.x
 	var m_y = settings.field_size.y
