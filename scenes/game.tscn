@@ -15,6 +15,11 @@ environment = ExtResource("2_lbhrr")
 camera_attributes = ExtResource("3_iywne")
 compositor = ExtResource("4_p57ef")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.380086, -0.597633, 0.705953, 3.0629e-08, 0.763232, 0.646124, -0.924951, -0.245583, 0.290094, 2.64199, 2.05139, -1.296)
+light_energy = 0.3
+shadow_enabled = true
+
 [node name="CameraPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
@@ -27,7 +32,7 @@ script = ExtResource("6_p57ef")
 indicator_scale = 1.5
 field_size = Vector3i(5, 5, 5)
 
-[node name="Tooltip" type="Label" parent="."]
+[node name="Tooltip" type="Label" parent="Minefield"]
 offset_left = -23.0
 offset_top = -23.0
 offset_right = -2.0
@@ -37,12 +42,7 @@ size_flags_vertical = 8
 text = "25"
 horizontal_alignment = 2
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.380086, -0.597633, 0.705953, 3.0629e-08, 0.763232, 0.646124, -0.924951, -0.245583, 0.290094, 2.64199, 2.05139, -1.296)
-light_energy = 0.3
-shadow_enabled = true
-
-[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="." node_paths=PackedStringArray("minefield")]
+[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="Minefield" node_paths=PackedStringArray("minefield")]
 stream = ExtResource("6_u5sy4")
 script = ExtResource("7_u5sy4")
-minefield = NodePath("../Minefield")
+minefield = NodePath("..")

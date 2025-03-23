@@ -22,7 +22,7 @@ static func get_mat(ivalue) -> Material:
 
 
 func _enter_tree():
-	tooltip = get_node("/root/Game/Tooltip")
+	tooltip = minefield.get_node("Tooltip")
 
 
 func _exit_tree():
