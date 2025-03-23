@@ -44,11 +44,13 @@ func _on_indicator_clicked(index: Vector3i):
 	var all_true_marked = {"value": true}
 
 	var check = func(idx):
-		if cells[idx].contains_mine and cells[idx].revealed:
+		var cell = cells[idx]
+		if (
+			(cell.contains_mine and cell.revealed)
+			or (!cell.revealed and !cell.contains_mine)
+			or (!cell.revealed and cell.contains_mine and !cell.marked)
+		):
 			all_true_marked["value"] = false
-		if !cells[idx].revealed and cells[idx].contains_mine:
-			if !cells[idx].marked:
-				all_true_marked["value"] = false
 
 	foreach_adjacent_facing(index, check)
 	if all_true_marked["value"]:
