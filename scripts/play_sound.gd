@@ -1,5 +1,7 @@
 extends AudioStreamPlayer3D
 
+@export var minefield: Minefield
+
 
 func _on_block_revealed(_index: Vector3i):
 	stream = preload("res://audio/pop2.ogg")
@@ -7,4 +9,4 @@ func _on_block_revealed(_index: Vector3i):
 
 
 func _ready():
-	Global.block_revealed.connect(_on_block_revealed)
+	minefield.block_revealed.connect(_on_block_revealed)

@@ -16,6 +16,7 @@ camera_attributes = ExtResource("3_iywne")
 compositor = ExtResource("4_p57ef")
 
 [node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
@@ -41,6 +42,7 @@ transform = Transform3D(0.380086, -0.597633, 0.705953, 3.0629e-08, 0.763232, 0.6
 light_energy = 0.3
 shadow_enabled = true
 
-[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="."]
+[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="." node_paths=PackedStringArray("minefield")]
 stream = ExtResource("6_u5sy4")
 script = ExtResource("7_u5sy4")
+minefield = NodePath("../Minefield")

@@ -1,5 +1,6 @@
 class_name Block extends CollisionObject3D
 
+var minefield: Minefield
 var index: Vector3i
 var marked = false
 
@@ -14,7 +15,7 @@ func _input_event(
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if not marked:
-				Global.block_revealed.emit(index)
+				minefield.block_revealed.emit(index)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			toggle_mark()
 
@@ -28,7 +29,7 @@ func toggle_mark():
 		marked = false
 		mark.visible = false
 
-	Global.block_marked.emit(index, marked)
+	minefield.block_marked.emit(index, marked)
 
 
 func crack():

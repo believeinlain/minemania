@@ -18,10 +18,6 @@ boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="uid://dhaqb2qnsugoc"
 config/icon="uid://b2gvldymuy4eu"
 
-[autoload]
-
-Global="*res://scripts/global.gd"
-
 [debug]
 
 gdscript/warnings/unused_signal=0

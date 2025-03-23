@@ -11,6 +11,12 @@ var mouse_down = false
 @export var mine_density: float = 0.2
 @export var safety: MineSafety = MineSafety.SAFE
 
+signal block_revealed(index: Vector3i)
+signal block_marked(index: Vector3i, marked: bool)
+
+signal indicator_mouseover(index: Vector3i, value: int, mouseover: bool)
+signal indicator_clicked(index: Vector3i)
+
 
 func _input(event):
 	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_MIDDLE:
@@ -58,10 +64,10 @@ func _on_indicator_clicked(index: Vector3i):
 
 
 func _ready():
-	Global.block_revealed.connect(_on_block_revealed)
-	Global.block_marked.connect(_on_block_marked)
-	Global.indicator_mouseover.connect(_on_indicator_mouseover)
-	Global.indicator_clicked.connect(_on_indicator_clicked)
+	block_revealed.connect(_on_block_revealed)
+	block_marked.connect(_on_block_marked)
+	indicator_mouseover.connect(_on_indicator_mouseover)
+	indicator_clicked.connect(_on_indicator_clicked)
 
 	spawn()
 
@@ -80,6 +86,7 @@ func spawn():
 				var c_y = y - m_y / 2
 				var c_z = z - m_z / 2
 				var instance = block.instantiate()
+				instance.minefield = self
 				instance.translate(Vector3(c_x, c_y, c_z))
 				instance.index = Vector3i(x, y, z)
 				add_child(instance)
@@ -201,6 +208,7 @@ func spawn_indicator(index) -> Node:
 			res = preload("res://objects/indicator_6.tscn")
 
 	var indicator := res.instantiate()
+	indicator.minefield = self
 	indicator.translate(cells[index].position)
 	indicator.scale_object_local(Vector3.ONE * indicator_scale)
 	indicator.value = adjacent_mines

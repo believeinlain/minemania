@@ -1,5 +1,6 @@
 class_name Indicator extends CollisionObject3D
 
+var minefield: Minefield
 var index: Vector3i
 const SPEED = 1.8
 @export var value = 1
@@ -30,12 +31,12 @@ func _exit_tree():
 
 func _mouse_enter():
 	tooltip.text = "%s" % value
-	Global.indicator_mouseover.emit(index, value, true)
+	minefield.indicator_mouseover.emit(index, value, true)
 
 
 func _mouse_exit():
 	tooltip.visible = false
-	Global.indicator_mouseover.emit(index, value, false)
+	minefield.indicator_mouseover.emit(index, value, false)
 
 
 func _input_event(
@@ -50,7 +51,7 @@ func _input_event(
 		tooltip.visible = true
 	elif event is InputEventMouseButton:
 		if event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
-			Global.indicator_clicked.emit(index)
+			minefield.indicator_clicked.emit(index)
 
 
 func _physics_process(delta):
