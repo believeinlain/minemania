@@ -14,7 +14,7 @@ var mouse_down = false
 signal block_revealed(index: Vector3i)
 signal block_marked(index: Vector3i, marked: bool)
 
-signal indicator_mouseover(index: Vector3i, value: int, mouseover: bool)
+signal indicator_mouseover(index: Vector3i, value: int, mouseover: bool, pos: Vector2)
 signal indicator_clicked(index: Vector3i)
 
 
@@ -42,7 +42,7 @@ func _on_block_marked(index: Vector3i, marked: bool):
 	cells[index].marked = marked
 
 
-func _on_indicator_mouseover(index: Vector3i, value: int, mouseover: bool):
+func _on_indicator_mouseover(index: Vector3i, value: int, mouseover: bool, _pos: Vector2):
 	foreach_adjacent_facing(index, func(i): cells[i].instance_call("highlight", [value, mouseover]))
 
 

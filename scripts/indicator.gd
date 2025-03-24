@@ -4,7 +4,6 @@ var minefield: Minefield
 var index: Vector3i
 const SPEED = 1.8
 @export var value = 1
-var tooltip: Label
 
 
 static func get_mat(ivalue) -> Material:
@@ -21,22 +20,12 @@ static func get_mat(ivalue) -> Material:
 			return preload("res://mat/indicator_1.tres")
 
 
-func _enter_tree():
-	tooltip = minefield.get_node("Tooltip")
-
-
 func _exit_tree():
-	tooltip.visible = false
-
-
-func _mouse_enter():
-	tooltip.text = "%s" % value
-	minefield.indicator_mouseover.emit(index, value, true)
+	minefield.indicator_mouseover.emit(index, value, false, Vector2.ZERO)
 
 
 func _mouse_exit():
-	tooltip.visible = false
-	minefield.indicator_mouseover.emit(index, value, false)
+	minefield.indicator_mouseover.emit(index, value, false, Vector2.ZERO)
 
 
 func _input_event(
@@ -47,8 +36,7 @@ func _input_event(
 	_shape_idx: int
 ):
 	if event is InputEventMouseMotion:
-		tooltip.position = event.position - tooltip.pivot_offset
-		tooltip.visible = true
+		minefield.indicator_mouseover.emit(index, value, true, event.position)
 	elif event is InputEventMouseButton:
 		if event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
 			minefield.indicator_clicked.emit(index)
