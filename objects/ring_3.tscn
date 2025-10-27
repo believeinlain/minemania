@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://crjod8buvkalc"]
 
 [ext_resource type="ArrayMesh" uid="uid://cwiwjm316nn7l" path="res://mesh/ring.res" id="1_kotiu"]
-[ext_resource type="Script" uid="uid://djt483hvp2ubs" path="res://scripts/rotate_orbit.gd" id="2_jud1o"]
+[ext_resource type="Script" uid="uid://djt483hvp2ubs" path="res://scripts/rotate.gd" id="2_jud1o"]
 [ext_resource type="ArrayMesh" uid="uid://cyud6xun0wttp" path="res://mesh/single1.res" id="3_58tef"]
 [ext_resource type="Material" uid="uid://endhurtjxgt6" path="res://mat/indicator_3.tres" id="4_vqe77"]
 
