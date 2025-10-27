@@ -4,7 +4,6 @@ enum MineSafety { NONE, SAFE, CLEAR }
 
 var cells: Dictionary[Vector3i, Cell]
 var initialized = false
-var mouse_down = false
 @export var indicator_scale = 1.0
 
 @export var field_size: Vector3i = Vector3i(3, 3, 3)
@@ -16,19 +15,6 @@ signal block_marked(index: Vector3i, marked: bool)
 
 signal indicator_mouseover(index: Vector3i, value: int, mouseover: bool, pos: Vector2)
 signal indicator_clicked(index: Vector3i)
-
-
-func _input(event):
-	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_MIDDLE:
-		mouse_down = event.is_pressed()
-
-	if event is InputEventMouseMotion && mouse_down:
-		var delta = event.screen_relative
-		var delta_x = delta.x / get_viewport().size.x * TAU
-		var delta_y = delta.y / get_viewport().size.y * TAU
-
-		rotate(Vector3.UP, delta_x)
-		rotate(Vector3.RIGHT, delta_y)
 
 
 func _on_block_revealed(index: Vector3i):

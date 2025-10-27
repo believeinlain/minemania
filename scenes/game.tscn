@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dly2fc31c4kj5"]
+[gd_scene load_steps=10 format=3 uid="uid://dly2fc31c4kj5"]
 
 [ext_resource type="Script" uid="uid://e4drhg3yeqh0" path="res://scripts/camera.gd" id="2_iywne"]
 [ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://env/sky.tres" id="2_lbhrr"]
 [ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://env/camera.tres" id="3_iywne"]
+[ext_resource type="Script" uid="uid://ccorqa1rnl3iy" path="res://scripts/camera_orbit.gd" id="4_0tnpc"]
 [ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://env/compositor.tres" id="4_p57ef"]
 [ext_resource type="Script" uid="uid://d2ckfyg4j2nvn" path="res://scripts/tooltip.gd" id="6_gee14"]
 [ext_resource type="Script" uid="uid://bs45o4r5tsbq3" path="res://scripts/minefield.gd" id="6_p57ef"]
@@ -21,9 +22,10 @@ transform = Transform3D(0.380086, -0.597633, 0.705953, 3.0629e-08, 0.763232, 0.6
 light_energy = 0.3
 shadow_enabled = true
 
-[node name="CameraPivot" type="Node3D" parent="."]
+[node name="CameraOrbit" type="Node3D" parent="."]
+script = ExtResource("4_0tnpc")
 
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+[node name="Camera3D" type="Camera3D" parent="CameraOrbit"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
 script = ExtResource("2_iywne")
 
