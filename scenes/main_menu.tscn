@@ -113,10 +113,9 @@ text = "Size"
 [node name="SizeControl" type="SpinBox" parent="FieldOptions/SizeBox"]
 layout_mode = 2
 min_value = 3.0
-max_value = 10.0
+max_value = 9.0
 value = 5.0
 rounded = true
-allow_greater = true
 
 [node name="DensityBox" type="BoxContainer" parent="FieldOptions"]
 layout_mode = 2
