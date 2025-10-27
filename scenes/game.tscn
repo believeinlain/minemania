@@ -29,6 +29,7 @@ script = ExtResource("4_0tnpc")
 [node name="Camera3D" type="Camera3D" parent="CameraOrbit"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
 script = ExtResource("2_iywne")
+camera_distance_factor = 1.2
 
 [node name="Minefield" type="Node3D" parent="."]
 script = ExtResource("6_p57ef")
