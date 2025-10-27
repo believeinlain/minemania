@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/image="uid://dhaqb2qnsugoc"
 config/icon="uid://b2gvldymuy4eu"
+boot_splash/minimum_display_time=2000
 
 [autoload]
 
@@ -29,9 +30,9 @@ gdscript/warnings/integer_division=0
 
 [display]
 
-window/size/viewport_width=1280
+window/size/viewport_width=720
 window/size/viewport_height=720
-window/size/resizable=false
+window/stretch/aspect="ignore"
 
 [editor]
 

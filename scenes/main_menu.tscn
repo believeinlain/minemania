@@ -13,20 +13,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ekxnf")
-density_control = NodePath("DensityControl")
-size_control = NodePath("SizeControl")
-safety_option = NodePath("SafetyOption")
-preset_small_button = NodePath("PresetSmall")
-preset_medium_button = NodePath("PresetMedium")
-preset_large_button = NodePath("PresetLarge")
+density_control = NodePath("FieldOptions/DensityBox/DensityControl")
+size_control = NodePath("FieldOptions/SizeBox/SizeControl")
+safety_option = NodePath("FieldOptions/SafetyBox/SafetyOption")
+preset_small_button = NodePath("FieldOptions/PresetSmall")
+preset_medium_button = NodePath("FieldOptions/PresetMedium")
+preset_large_button = NodePath("FieldOptions/PresetLarge")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.3
+anchor_top = 0.2
 anchor_right = 0.5
-anchor_bottom = 0.3
+anchor_bottom = 0.2
 offset_left = -146.0
 offset_top = -34.5
 offset_right = 146.0
@@ -36,102 +36,113 @@ grow_vertical = 2
 text = "Mine Mania"
 label_settings = SubResource("LabelSettings_vue75")
 
-[node name="SizeControl" type="SpinBox" parent="."]
-layout_mode = 0
-offset_left = 354.0
-offset_top = 518.0
-offset_right = 440.5625
-offset_bottom = 549.0
+[node name="FieldOptions" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -159.0
+offset_top = -46.5
+offset_right = 159.0
+offset_bottom = 46.5
+grow_horizontal = 2
+grow_vertical = 2
+columns = 5
+
+[node name="PresetLabel" type="Label" parent="FieldOptions"]
+layout_mode = 2
+text = "Presets"
+
+[node name="VSeparator" type="VSeparator" parent="FieldOptions"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="PresetSmall" type="Button" parent="FieldOptions"]
+layout_mode = 2
+action_mode = 0
+text = "Small"
+
+[node name="PresetMedium" type="Button" parent="FieldOptions"]
+layout_mode = 2
+action_mode = 0
+text = "Medium"
+
+[node name="PresetLarge" type="Button" parent="FieldOptions"]
+layout_mode = 2
+action_mode = 0
+text = "Large"
+
+[node name="HSeparator" type="HSeparator" parent="FieldOptions"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HSeparator2" type="Control" parent="FieldOptions"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HSeparator3" type="HSeparator" parent="FieldOptions"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HSeparator4" type="HSeparator" parent="FieldOptions"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HSeparator5" type="HSeparator" parent="FieldOptions"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="CustomLabel" type="Label" parent="FieldOptions"]
+layout_mode = 2
+text = "Custom"
+
+[node name="VSeparator2" type="VSeparator" parent="FieldOptions"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SizeBox" type="BoxContainer" parent="FieldOptions"]
+layout_mode = 2
+vertical = true
+
+[node name="SizeLabel" type="Label" parent="FieldOptions/SizeBox"]
+layout_mode = 2
+text = "Size"
+
+[node name="SizeControl" type="SpinBox" parent="FieldOptions/SizeBox"]
+layout_mode = 2
 min_value = 3.0
 max_value = 10.0
-value = 3.0
+value = 5.0
 rounded = true
 allow_greater = true
 
-[node name="DensityControl" type="SpinBox" parent="."]
-layout_mode = 0
-offset_left = 506.0
-offset_top = 520.0
-offset_right = 592.5625
-offset_bottom = 551.0
+[node name="DensityBox" type="BoxContainer" parent="FieldOptions"]
+layout_mode = 2
+vertical = true
+
+[node name="DensityLabel" type="Label" parent="FieldOptions/DensityBox"]
+layout_mode = 2
+text = "Density"
+
+[node name="DensityControl" type="SpinBox" parent="FieldOptions/DensityBox"]
+layout_mode = 2
 min_value = 0.1
 max_value = 0.9
 step = 0.1
 value = 0.1
 
-[node name="Sizelabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 382.0
-offset_top = 487.0
-offset_right = 422.0
-offset_bottom = 510.0
-text = "Size"
+[node name="SafetyBox" type="BoxContainer" parent="FieldOptions"]
+layout_mode = 2
+vertical = true
 
-[node name="DensityLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 518.0
-offset_top = 489.0
-offset_right = 558.0
-offset_bottom = 512.0
-text = "Density"
-
-[node name="SafetyLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 695.0
-offset_top = 488.0
-offset_right = 754.0
-offset_bottom = 511.0
+[node name="SafetyLabel" type="Label" parent="FieldOptions/SafetyBox"]
+layout_mode = 2
 text = "Safety"
 
-[node name="PresetSmall" type="Button" parent="."]
-layout_mode = 0
-offset_left = 364.0
-offset_top = 379.0
-offset_right = 428.71948
-offset_bottom = 410.0
-action_mode = 0
-text = "Small"
-
-[node name="PresetMedium" type="Button" parent="."]
-layout_mode = 0
-offset_left = 517.0
-offset_top = 376.0
-offset_right = 589.0
-offset_bottom = 407.0
-action_mode = 0
-text = "Medium"
-
-[node name="PresetLarge" type="Button" parent="."]
-layout_mode = 0
-offset_left = 687.0
-offset_top = 375.0
-offset_right = 759.0
-offset_bottom = 406.0
-action_mode = 0
-text = "Large"
-
-[node name="PresetLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 263.0
-offset_top = 378.0
-offset_right = 321.0
-offset_bottom = 401.0
-text = "Presets"
-
-[node name="CustomLabel" type="Label" parent="."]
-layout_mode = 0
-offset_left = 259.0
-offset_top = 521.0
-offset_right = 319.0
-offset_bottom = 544.0
-text = "Custom"
-
-[node name="SafetyOption" type="OptionButton" parent="."]
-layout_mode = 0
-offset_left = 698.0
-offset_top = 524.0
-offset_right = 730.0
-offset_bottom = 544.0
+[node name="SafetyOption" type="OptionButton" parent="FieldOptions/SafetyBox"]
+layout_mode = 2
 selected = 1
 item_count = 3
 popup/item_0/text = "None"
@@ -141,25 +152,36 @@ popup/item_1/id = 1
 popup/item_2/text = "Clear"
 popup/item_2/id = 2
 
-[node name="StartButton" type="Button" parent="."]
+[node name="Actions" type="BoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.9
+anchor_top = 0.8
 anchor_right = 0.5
-anchor_bottom = 0.9
-offset_left = -25.0
-offset_top = -15.5
-offset_right = 25.0
-offset_bottom = 15.5
+anchor_bottom = 0.8
+offset_left = -100.0
+offset_top = -15.0
+offset_right = 100.0
+offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="Actions"]
+layout_mode = 2
 text = "Start!"
 
-[connection signal="value_changed" from="SizeControl" to="." method="_on_size_control_value_changed"]
-[connection signal="value_changed" from="DensityControl" to="." method="_on_density_control_value_changed"]
-[connection signal="pressed" from="PresetSmall" to="." method="_on_preset_small_pressed"]
-[connection signal="pressed" from="PresetMedium" to="." method="_on_preset_medium_pressed"]
-[connection signal="pressed" from="PresetLarge" to="." method="_on_preset_large_pressed"]
-[connection signal="item_selected" from="SafetyOption" to="." method="_on_safety_option_item_selected"]
-[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[node name="QuitButton" type="Button" parent="Actions"]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+text = "Quit"
+
+[connection signal="pressed" from="FieldOptions/PresetSmall" to="." method="_on_preset_small_pressed"]
+[connection signal="pressed" from="FieldOptions/PresetMedium" to="." method="_on_preset_medium_pressed"]
+[connection signal="pressed" from="FieldOptions/PresetLarge" to="." method="_on_preset_large_pressed"]
+[connection signal="value_changed" from="FieldOptions/SizeBox/SizeControl" to="." method="_on_size_control_value_changed"]
+[connection signal="value_changed" from="FieldOptions/DensityBox/DensityControl" to="." method="_on_density_control_value_changed"]
+[connection signal="item_selected" from="FieldOptions/SafetyBox/SafetyOption" to="." method="_on_safety_option_item_selected"]
+[connection signal="pressed" from="Actions/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Actions/QuitButton" to="." method="_on_quit_button_pressed"]

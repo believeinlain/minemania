@@ -71,12 +71,10 @@ func spawn():
 	for x in m_x:
 		for y in m_y:
 			for z in m_z:
-				var c_x = x - m_x / 2
-				var c_y = y - m_y / 2
-				var c_z = z - m_z / 2
+				var c = Vector3(x, y, z) - Vector3(Field.size) / 2.0
 				var instance = block.instantiate()
 				instance.minefield = self
-				instance.translate(Vector3(c_x, c_y, c_z))
+				instance.translate(c + Vector3.ONE / 2.0)
 				instance.index = Vector3i(x, y, z)
 				add_child(instance)
 				cells[instance.index] = Cell.create(instance)

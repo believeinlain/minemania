@@ -1,8 +1,8 @@
 extends Node3D
 
-@export var camera_distance_factor: float = 1.5
-@export var camera_distance_offset: float = 1.0
-@export var camera_zoom_speed: float = 0.1
+@export var camera_distance_factor: float
+@export var camera_distance_offset: float
+@export var camera_zoom_speed: float
 
 
 func _enter_tree():
@@ -11,6 +11,7 @@ func _enter_tree():
 	var camera_dist = (max_dim / 2.0) * camera_distance_factor + camera_distance_offset
 	var camera_pos = Vector3(0.0, camera_dist, camera_dist)
 	look_at_from_position(camera_pos, Vector3.ZERO, Vector3.UP)
+	get_parent_node_3d().rotate(Vector3.RIGHT, PI / 4.0)
 
 
 func _input(event: InputEvent) -> void:

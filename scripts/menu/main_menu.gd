@@ -10,7 +10,7 @@ extends Control
 
 const PRESET_SMALL = {"size": 3, "density": 0.2, "safety": Field.Safety.SAFE}
 const PRESET_MEDIUM = {"size": 5, "density": 0.1, "safety": Field.Safety.SAFE}
-const PRESET_LARGE = {"size": 10, "density": 0.1, "safety": Field.Safety.SAFE}
+const PRESET_LARGE = {"size": 9, "density": 0.1, "safety": Field.Safety.SAFE}
 
 
 func _ready() -> void:
@@ -23,7 +23,6 @@ func _ready() -> void:
 	safety_option.set_item_tooltip(
 		Field.Safety.CLEAR, "Blocks adjacent to the first block broken will not contain a mine."
 	)
-	apply_preset(PRESET_MEDIUM)
 
 
 func apply_preset(preset: Dictionary):
@@ -59,3 +58,7 @@ func _on_safety_option_item_selected(index: int) -> void:
 
 func _on_start_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+
+func _on_quit_button_pressed() -> void:
+	get_tree().quit(0)
