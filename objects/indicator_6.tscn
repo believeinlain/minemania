@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dnd6p2r2srffw"]
 
-[ext_resource type="Script" uid="uid://wi5lhnavan3a" path="res://scripts/indicator.gd" id="1_6t21a"]
+[ext_resource type="Script" uid="uid://wi5lhnavan3a" path="res://scripts/game/indicator.gd" id="1_6t21a"]
 [ext_resource type="ArrayMesh" uid="uid://cyud6xun0wttp" path="res://mesh/single1.res" id="2_mb15r"]
 [ext_resource type="PackedScene" uid="uid://dxqunk50rrlac" path="res://objects/ring_1.tscn" id="3_vlyte"]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ixsvxkwh5d2j"]
 
 [ext_resource type="ArrayMesh" uid="uid://y6yg4pk4imn" path="res://mesh/single4.res" id="1_j5wrl"]
-[ext_resource type="Script" uid="uid://wi5lhnavan3a" path="res://scripts/indicator.gd" id="1_uk21w"]
+[ext_resource type="Script" uid="uid://wi5lhnavan3a" path="res://scripts/game/indicator.gd" id="1_uk21w"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uk21w"]
 radius = 0.05

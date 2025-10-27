@@ -1,0 +1,165 @@
+[gd_scene load_steps=3 format=3 uid="uid://d03yrfh7ylr8n"]
+
+[ext_resource type="Script" uid="uid://dtqhus4eyi0t1" path="res://scripts/menu/main_menu.gd" id="1_ekxnf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vue75"]
+font_size = 50
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("density_control", "size_control", "safety_option", "preset_small_button", "preset_medium_button", "preset_large_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ekxnf")
+density_control = NodePath("DensityControl")
+size_control = NodePath("SizeControl")
+safety_option = NodePath("SafetyOption")
+preset_small_button = NodePath("PresetSmall")
+preset_medium_button = NodePath("PresetMedium")
+preset_large_button = NodePath("PresetLarge")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.3
+anchor_right = 0.5
+anchor_bottom = 0.3
+offset_left = -146.0
+offset_top = -34.5
+offset_right = 146.0
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mine Mania"
+label_settings = SubResource("LabelSettings_vue75")
+
+[node name="SizeControl" type="SpinBox" parent="."]
+layout_mode = 0
+offset_left = 354.0
+offset_top = 518.0
+offset_right = 440.5625
+offset_bottom = 549.0
+min_value = 3.0
+max_value = 10.0
+value = 3.0
+rounded = true
+allow_greater = true
+
+[node name="DensityControl" type="SpinBox" parent="."]
+layout_mode = 0
+offset_left = 506.0
+offset_top = 520.0
+offset_right = 592.5625
+offset_bottom = 551.0
+min_value = 0.1
+max_value = 0.9
+step = 0.1
+value = 0.1
+
+[node name="Sizelabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 382.0
+offset_top = 487.0
+offset_right = 422.0
+offset_bottom = 510.0
+text = "Size"
+
+[node name="DensityLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 518.0
+offset_top = 489.0
+offset_right = 558.0
+offset_bottom = 512.0
+text = "Density"
+
+[node name="SafetyLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 695.0
+offset_top = 488.0
+offset_right = 754.0
+offset_bottom = 511.0
+text = "Safety"
+
+[node name="PresetSmall" type="Button" parent="."]
+layout_mode = 0
+offset_left = 364.0
+offset_top = 379.0
+offset_right = 428.71948
+offset_bottom = 410.0
+action_mode = 0
+text = "Small"
+
+[node name="PresetMedium" type="Button" parent="."]
+layout_mode = 0
+offset_left = 517.0
+offset_top = 376.0
+offset_right = 589.0
+offset_bottom = 407.0
+action_mode = 0
+text = "Medium"
+
+[node name="PresetLarge" type="Button" parent="."]
+layout_mode = 0
+offset_left = 687.0
+offset_top = 375.0
+offset_right = 759.0
+offset_bottom = 406.0
+action_mode = 0
+text = "Large"
+
+[node name="PresetLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 263.0
+offset_top = 378.0
+offset_right = 321.0
+offset_bottom = 401.0
+text = "Presets"
+
+[node name="CustomLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 259.0
+offset_top = 521.0
+offset_right = 319.0
+offset_bottom = 544.0
+text = "Custom"
+
+[node name="SafetyOption" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 698.0
+offset_top = 524.0
+offset_right = 730.0
+offset_bottom = 544.0
+selected = 1
+item_count = 3
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_1/text = "Safe"
+popup/item_1/id = 1
+popup/item_2/text = "Clear"
+popup/item_2/id = 2
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.9
+anchor_right = 0.5
+anchor_bottom = 0.9
+offset_left = -25.0
+offset_top = -15.5
+offset_right = 25.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start!"
+
+[connection signal="value_changed" from="SizeControl" to="." method="_on_size_control_value_changed"]
+[connection signal="value_changed" from="DensityControl" to="." method="_on_density_control_value_changed"]
+[connection signal="pressed" from="PresetSmall" to="." method="_on_preset_small_pressed"]
+[connection signal="pressed" from="PresetMedium" to="." method="_on_preset_medium_pressed"]
+[connection signal="pressed" from="PresetLarge" to="." method="_on_preset_large_pressed"]
+[connection signal="item_selected" from="SafetyOption" to="." method="_on_safety_option_item_selected"]
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

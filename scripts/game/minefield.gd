@@ -1,20 +1,20 @@
 class_name Minefield extends Node3D
 
-enum MineSafety { NONE, SAFE, CLEAR }
-
 var cells: Dictionary[Vector3i, Cell]
 var initialized = false
 @export var indicator_scale = 1.0
-
-@export var field_size: Vector3i = Vector3i(3, 3, 3)
-@export var mine_density: float = 0.2
-@export var safety: MineSafety = MineSafety.SAFE
+@export var block: PackedScene
 
 signal block_revealed(index: Vector3i)
 signal block_marked(index: Vector3i, marked: bool)
 
 signal indicator_mouseover(index: Vector3i, value: int, mouseover: bool, pos: Vector2)
 signal indicator_clicked(index: Vector3i)
+
+
+static func compute_world_size() -> Vector3:
+	var block_scale = 1.0
+	return Vector3(Field.size) * block_scale
 
 
 func _on_block_revealed(index: Vector3i):
@@ -49,6 +49,11 @@ func _on_indicator_clicked(index: Vector3i):
 		disarm(index)
 
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("game_exit"):
+		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+
 func _ready():
 	block_revealed.connect(_on_block_revealed)
 	block_marked.connect(_on_block_marked)
@@ -59,11 +64,9 @@ func _ready():
 
 
 func spawn():
-	var block = preload("res://objects/block.tscn")
-
-	var m_x = field_size.x
-	var m_y = field_size.y
-	var m_z = field_size.z
+	var m_x = Field.size.x
+	var m_y = Field.size.y
+	var m_z = Field.size.z
 
 	for x in m_x:
 		for y in m_y:
@@ -123,17 +126,17 @@ func disarm(index: Vector3i):
 
 
 func initialize(clicked: Vector3i):
-	var num_blocks = field_size.x * field_size.y * field_size.z
-	var num_mines: int = num_blocks * mine_density
+	var num_blocks = Field.size.x * Field.size.y * Field.size.z
+	var num_mines: int = num_blocks * Field.mine_density
 
 	# Determine which cells cannot contain mines
 	var safe_cells: Dictionary
-	match safety:
-		MineSafety.NONE:
+	match Field.safety:
+		Field.Safety.NONE:
 			safe_cells = {}
-		MineSafety.SAFE:
+		Field.Safety.SAFE:
 			safe_cells = {clicked: null}
-		MineSafety.CLEAR:
+		Field.Safety.CLEAR:
 			safe_cells = {clicked: null}
 			foreach_adjacent_facing(clicked, func(adj_idx): safe_cells[adj_idx] = null)
 

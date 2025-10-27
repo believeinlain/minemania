@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://b0or4r56t3evk"]
 
-[ext_resource type="Script" uid="uid://5xrjxnip55vg" path="res://scripts/block.gd" id="1_0le4o"]
+[ext_resource type="Script" uid="uid://5xrjxnip55vg" path="res://scripts/game/block.gd" id="1_0le4o"]
 [ext_resource type="PackedScene" uid="uid://blgudukan5c86" path="res://objects/block.tscn" id="1_vyjha"]
 [ext_resource type="PackedScene" uid="uid://cm2ciikw25wbi" path="res://objects/mine.tscn" id="2_vyjha"]
 [ext_resource type="ArrayMesh" uid="uid://b1a605br1hjw5" path="res://mesh/block.res" id="2_x7wln"]

@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://deq36uchgtj28"]
 
-[ext_resource type="Script" uid="uid://wi5lhnavan3a" path="res://scripts/indicator.gd" id="1_6t21a"]
+[ext_resource type="Script" uid="uid://wi5lhnavan3a" path="res://scripts/game/indicator.gd" id="1_6t21a"]
 [ext_resource type="ArrayMesh" uid="uid://cyud6xun0wttp" path="res://mesh/single1.res" id="2_mb15r"]
 [ext_resource type="ArrayMesh" uid="uid://cwiwjm316nn7l" path="res://mesh/ring.res" id="3_6kvnb"]
-[ext_resource type="Script" uid="uid://djt483hvp2ubs" path="res://scripts/rotate.gd" id="4_u6ove"]
+[ext_resource type="Script" uid="uid://djt483hvp2ubs" path="res://scripts/game/rotate.gd" id="4_u6ove"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4relh"]
 radius = 0.15

@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://dly2fc31c4kj5"]
+[gd_scene load_steps=11 format=3 uid="uid://dly2fc31c4kj5"]
 
-[ext_resource type="Script" uid="uid://e4drhg3yeqh0" path="res://scripts/camera.gd" id="2_iywne"]
+[ext_resource type="Script" uid="uid://e4drhg3yeqh0" path="res://scripts/game/camera.gd" id="2_iywne"]
 [ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://env/sky.tres" id="2_lbhrr"]
 [ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://env/camera.tres" id="3_iywne"]
-[ext_resource type="Script" uid="uid://ccorqa1rnl3iy" path="res://scripts/camera_orbit.gd" id="4_0tnpc"]
+[ext_resource type="Script" uid="uid://ccorqa1rnl3iy" path="res://scripts/game/camera_orbit.gd" id="4_0tnpc"]
 [ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://env/compositor.tres" id="4_p57ef"]
-[ext_resource type="Script" uid="uid://d2ckfyg4j2nvn" path="res://scripts/tooltip.gd" id="6_gee14"]
-[ext_resource type="Script" uid="uid://bs45o4r5tsbq3" path="res://scripts/minefield.gd" id="6_p57ef"]
+[ext_resource type="Script" uid="uid://d2ckfyg4j2nvn" path="res://scripts/game/tooltip.gd" id="6_gee14"]
+[ext_resource type="Script" uid="uid://bs45o4r5tsbq3" path="res://scripts/game/minefield.gd" id="6_p57ef"]
 [ext_resource type="AudioStream" uid="uid://cpw00slvubu3d" path="res://audio/pop2.ogg" id="6_u5sy4"]
-[ext_resource type="Script" uid="uid://cvy6aqcf851k7" path="res://scripts/play_sound.gd" id="7_u5sy4"]
+[ext_resource type="Script" uid="uid://cvy6aqcf851k7" path="res://scripts/game/play_sound.gd" id="7_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://blgudukan5c86" path="res://objects/block.tscn" id="7_vtaks"]
 
 [node name="Game" type="Node3D"]
 
@@ -32,7 +33,7 @@ script = ExtResource("2_iywne")
 [node name="Minefield" type="Node3D" parent="."]
 script = ExtResource("6_p57ef")
 indicator_scale = 1.5
-field_size = Vector3i(5, 5, 5)
+block = ExtResource("7_vtaks")
 
 [node name="AudioPlayer" type="AudioStreamPlayer3D" parent="Minefield" node_paths=PackedStringArray("minefield")]
 stream = ExtResource("6_u5sy4")
