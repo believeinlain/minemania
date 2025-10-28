@@ -5,7 +5,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_vue75"]
 font_size = 50
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("density_control", "size_control", "safety_option", "preset_small_button", "preset_medium_button", "preset_large_button")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("density_control", "size_control", "safety_option", "disarm_toggle", "preset_small_button", "preset_medium_button", "preset_large_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,6 +16,7 @@ script = ExtResource("1_ekxnf")
 density_control = NodePath("FieldOptions/DensityBox/DensityControl")
 size_control = NodePath("FieldOptions/SizeBox/SizeControl")
 safety_option = NodePath("FieldOptions/SafetyBox/SafetyOption")
+disarm_toggle = NodePath("FieldOptions/DisarmBox/DisarmToggle")
 preset_small_button = NodePath("FieldOptions/PresetSmall")
 preset_medium_button = NodePath("FieldOptions/PresetMedium")
 preset_large_button = NodePath("FieldOptions/PresetLarge")
@@ -49,7 +50,7 @@ offset_right = 159.0
 offset_bottom = 46.5
 grow_horizontal = 2
 grow_vertical = 2
-columns = 5
+columns = 6
 
 [node name="PresetLabel" type="Label" parent="FieldOptions"]
 layout_mode = 2
@@ -74,6 +75,10 @@ layout_mode = 2
 action_mode = 0
 text = "Large"
 
+[node name="HSeparator7" type="Control" parent="FieldOptions"]
+layout_mode = 2
+size_flags_vertical = 0
+
 [node name="HSeparator" type="HSeparator" parent="FieldOptions"]
 layout_mode = 2
 size_flags_vertical = 0
@@ -91,6 +96,10 @@ layout_mode = 2
 size_flags_vertical = 0
 
 [node name="HSeparator5" type="HSeparator" parent="FieldOptions"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HSeparator6" type="HSeparator" parent="FieldOptions"]
 layout_mode = 2
 size_flags_vertical = 0
 
@@ -112,6 +121,7 @@ text = "Size"
 
 [node name="SizeControl" type="SpinBox" parent="FieldOptions/SizeBox"]
 layout_mode = 2
+tooltip_text = "Size of the minefield."
 min_value = 3.0
 max_value = 9.0
 value = 5.0
@@ -127,6 +137,7 @@ text = "Density"
 
 [node name="DensityControl" type="SpinBox" parent="FieldOptions/DensityBox"]
 layout_mode = 2
+tooltip_text = "Mine density as a fraction of mines per block."
 min_value = 0.1
 max_value = 0.9
 step = 0.1
@@ -142,6 +153,7 @@ text = "Safety"
 
 [node name="SafetyOption" type="OptionButton" parent="FieldOptions/SafetyBox"]
 layout_mode = 2
+tooltip_text = "Determine whether it is possible to lose the game when revealing the first block."
 selected = 1
 item_count = 3
 popup/item_0/text = "None"
@@ -150,6 +162,22 @@ popup/item_1/text = "Safe"
 popup/item_1/id = 1
 popup/item_2/text = "Clear"
 popup/item_2/id = 2
+
+[node name="DisarmBox" type="BoxContainer" parent="FieldOptions"]
+layout_mode = 2
+vertical = true
+
+[node name="DisarmLabel" type="Label" parent="FieldOptions/DisarmBox"]
+layout_mode = 2
+text = "Disarm"
+
+[node name="DisarmToggle" type="CheckButton" parent="FieldOptions/DisarmBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Allow marked mines around a fully revealed indicator to be disarmed.
+
+Useful for large fields where marked mines can obscure the view."
 
 [node name="Actions" type="BoxContainer" parent="."]
 layout_mode = 1
@@ -182,5 +210,6 @@ text = "Quit"
 [connection signal="value_changed" from="FieldOptions/SizeBox/SizeControl" to="." method="_on_size_control_value_changed"]
 [connection signal="value_changed" from="FieldOptions/DensityBox/DensityControl" to="." method="_on_density_control_value_changed"]
 [connection signal="item_selected" from="FieldOptions/SafetyBox/SafetyOption" to="." method="_on_safety_option_item_selected"]
+[connection signal="toggled" from="FieldOptions/DisarmBox/DisarmToggle" to="." method="_on_disarm_toggle_toggled"]
 [connection signal="pressed" from="Actions/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Actions/QuitButton" to="." method="_on_quit_button_pressed"]

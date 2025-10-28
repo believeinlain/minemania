@@ -2,6 +2,8 @@ class_name Minefield extends Node3D
 
 var cells: Dictionary[Vector3i, Cell]
 var initialized = false
+
+@export var game: Game
 @export var indicator_scale = 1.0
 @export var block: PackedScene
 
@@ -10,6 +12,9 @@ signal block_marked(index: Vector3i, marked: bool)
 
 signal indicator_mouseover(index: Vector3i, value: int, mouseover: bool, pos: Vector2)
 signal indicator_clicked(index: Vector3i)
+
+signal win_game
+signal lose_game
 
 
 static func compute_world_size() -> Vector3:
@@ -23,9 +28,12 @@ func _on_block_revealed(index: Vector3i):
 
 	reveal(index)
 
+	if game.is_playing() && is_game_won():
+		win_game.emit()
+
 
 func _on_block_marked(index: Vector3i, marked: bool):
-	cells[index].marked = marked
+	cells[index].instance.marked = marked
 
 
 func _on_indicator_mouseover(index: Vector3i, value: int, mouseover: bool, _pos: Vector2):
@@ -33,6 +41,9 @@ func _on_indicator_mouseover(index: Vector3i, value: int, mouseover: bool, _pos:
 
 
 func _on_indicator_clicked(index: Vector3i):
+	if !Field.allow_disarming || !game.is_playing():
+		return
+
 	var all_true_marked = {"value": true}
 
 	var check = func(idx):
@@ -40,7 +51,7 @@ func _on_indicator_clicked(index: Vector3i):
 		if (
 			(cell.contains_mine and cell.revealed)
 			or (!cell.revealed and !cell.contains_mine)
-			or (!cell.revealed and cell.contains_mine and !cell.marked)
+			or (!cell.revealed and cell.contains_mine and !cell.instance_call("is_marked"))
 		):
 			all_true_marked["value"] = false
 
@@ -55,15 +66,6 @@ func _input(event: InputEvent) -> void:
 
 
 func _ready():
-	block_revealed.connect(_on_block_revealed)
-	block_marked.connect(_on_block_marked)
-	indicator_mouseover.connect(_on_indicator_mouseover)
-	indicator_clicked.connect(_on_indicator_clicked)
-
-	spawn()
-
-
-func spawn():
 	var m_x = Field.size.x
 	var m_y = Field.size.y
 	var m_z = Field.size.z
@@ -93,6 +95,8 @@ func reveal(index: Vector3i):
 		var instance = mine.instantiate()
 		instance.translate(cell.position)
 		add_child(instance)
+		if game.is_playing():
+			lose_game.emit()
 	else:
 		if cell.adjacent_mines > 0:
 			cell.instance = spawn_indicator(index)
@@ -203,3 +207,62 @@ func spawn_indicator(index) -> Node:
 	add_child(indicator)
 
 	return indicator
+
+
+func is_game_won():
+	var m_x = Field.size.x
+	var m_y = Field.size.y
+	var m_z = Field.size.z
+
+	for x in m_x:
+		for y in m_y:
+			for z in m_z:
+				var index = Vector3i(x, y, z)
+				var cell = cells[index]
+
+				# any empty blocks must be broken to win
+				if !cell.contains_mine && !cell.revealed:
+					return false
+
+	# otherwise we win!
+	return true
+
+
+func mark_remaining_mines():
+	var m_x = Field.size.x
+	var m_y = Field.size.y
+	var m_z = Field.size.z
+
+	for x in m_x:
+		for y in m_y:
+			for z in m_z:
+				var index = Vector3i(x, y, z)
+				var cell = cells[index]
+
+				if cell.contains_mine:
+					cell.instance_call("set_marked", [true])
+
+
+func reveal_remaining_mines():
+	var m_x = Field.size.x
+	var m_y = Field.size.y
+	var m_z = Field.size.z
+
+	for x in m_x:
+		for y in m_y:
+			for z in m_z:
+				var index = Vector3i(x, y, z)
+				var cell = cells[index]
+
+				if cell.contains_mine && cell.instance_call("is_marked"):
+					pass
+				else:
+					reveal(index)
+
+
+func _on_win_game() -> void:
+	mark_remaining_mines()
+
+
+func _on_lose_game() -> void:
+	reveal_remaining_mines()

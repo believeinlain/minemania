@@ -12,7 +12,7 @@ func _input_event(
 	_normal: Vector3,
 	_shape_idx: int
 ):
-	if event is InputEventMouseButton and event.is_pressed():
+	if event is InputEventMouseButton && event.is_pressed() && minefield.game.is_playing():
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if not marked:
 				minefield.block_revealed.emit(index)
@@ -20,14 +20,22 @@ func _input_event(
 			toggle_mark()
 
 
+func is_marked():
+	return marked
+
+
 func toggle_mark():
-	var mark = get_node("Mark")
 	if not marked:
-		marked = true
-		mark.visible = true
+		set_marked(true)
 	else:
-		marked = false
-		mark.visible = false
+		set_marked(false)
+
+
+func set_marked(mark_state: bool):
+	var mark = get_node("Mark")
+
+	marked = mark_state
+	mark.visible = mark_state
 
 	minefield.block_marked.emit(index, marked)
 

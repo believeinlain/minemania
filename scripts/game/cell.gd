@@ -4,7 +4,6 @@ var instance: Node3D
 var adjacent_mines = 0
 var contains_mine = false
 var revealed = false
-var marked = false
 
 
 static func create(new_instance: Node3D) -> Cell:
@@ -16,7 +15,7 @@ static func create(new_instance: Node3D) -> Cell:
 
 func instance_call(method: String, args = []):
 	if instance != null and instance.has_method(method):
-		instance.callv(method, args)
+		return instance.callv(method, args)
 
 
 func instance_delete():

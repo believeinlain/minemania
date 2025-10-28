@@ -3,14 +3,15 @@ extends Control
 @export var density_control: Range
 @export var size_control: Range
 @export var safety_option: OptionButton
+@export var disarm_toggle: CheckButton
 
 @export var preset_small_button: Button
 @export var preset_medium_button: Button
 @export var preset_large_button: Button
 
-const PRESET_SMALL = {"size": 3, "density": 0.2, "safety": Field.Safety.SAFE}
-const PRESET_MEDIUM = {"size": 5, "density": 0.1, "safety": Field.Safety.SAFE}
-const PRESET_LARGE = {"size": 9, "density": 0.1, "safety": Field.Safety.SAFE}
+const PRESET_SMALL = {"size": 3, "density": 0.2, "safety": Field.Safety.SAFE, "disarm": false}
+const PRESET_MEDIUM = {"size": 5, "density": 0.1, "safety": Field.Safety.SAFE, "disarm": false}
+const PRESET_LARGE = {"size": 9, "density": 0.1, "safety": Field.Safety.SAFE, "disarm": true}
 
 
 func _ready() -> void:
@@ -23,12 +24,22 @@ func _ready() -> void:
 	safety_option.set_item_tooltip(
 		Field.Safety.CLEAR, "Blocks adjacent to the first block broken will not contain a mine."
 	)
+	var default_preset = PRESET_MEDIUM
+
+	apply_preset(default_preset)
+
+	var s = default_preset.size
+	Field.size = Vector3i(s, s, s)
+	Field.mine_density = default_preset.density
+	Field.safety = default_preset.safety
+	Field.allow_disarming = default_preset.disarm
 
 
 func apply_preset(preset: Dictionary):
 	size_control.value = preset.size
 	density_control.value = preset.density
 	safety_option.select(preset.safety)
+	disarm_toggle.button_pressed = preset.disarm
 
 
 func _on_preset_small_pressed() -> void:
@@ -54,6 +65,10 @@ func _on_density_control_value_changed(value: float) -> void:
 
 func _on_safety_option_item_selected(index: int) -> void:
 	Field.safety = index as Field.Safety
+
+
+func _on_disarm_toggle_toggled(toggled_on: bool) -> void:
+	Field.allow_disarming = toggled_on
 
 
 func _on_start_button_pressed() -> void:
