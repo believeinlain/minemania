@@ -1,72 +1,19 @@
-[gd_scene load_steps=17 format=3 uid="uid://dly2fc31c4kj5"]
+[gd_scene load_steps=10 format=3 uid="uid://dly2fc31c4kj5"]
 
 [ext_resource type="Script" uid="uid://doa1sqhpui4vp" path="res://scripts/game/game.gd" id="1_kvpfn"]
 [ext_resource type="Script" uid="uid://e4drhg3yeqh0" path="res://scripts/game/camera.gd" id="2_iywne"]
-[ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://env/sky.tres" id="2_lbhrr"]
-[ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://env/camera.tres" id="3_iywne"]
 [ext_resource type="Script" uid="uid://ccorqa1rnl3iy" path="res://scripts/game/camera_orbit.gd" id="4_0tnpc"]
-[ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://env/compositor.tres" id="4_p57ef"]
 [ext_resource type="Script" uid="uid://d2ckfyg4j2nvn" path="res://scripts/game/tooltip.gd" id="6_gee14"]
 [ext_resource type="Script" uid="uid://bs45o4r5tsbq3" path="res://scripts/game/minefield.gd" id="6_p57ef"]
 [ext_resource type="AudioStream" uid="uid://cpw00slvubu3d" path="res://audio/pop2.ogg" id="6_u5sy4"]
 [ext_resource type="Script" uid="uid://cvy6aqcf851k7" path="res://scripts/game/play_sound.gd" id="7_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://blgudukan5c86" path="res://objects/block.tscn" id="7_vtaks"]
-[ext_resource type="Material" uid="uid://mclpvoh23tkd" path="res://mat/clouds.tres" id="12_dinhu"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_kvuet"]
-size = Vector2(1000, 1000)
-
-[sub_resource type="Animation" id="Animation_xgdjl"]
-resource_name = "cloud_drift"
-length = 100.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material_override:shader_parameter/uv1_offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 100),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(1, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_5exq1"]
-length = 100.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:surface_material_override/0:shader_parameter/uv1_offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 100),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(1, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_4pb3l"]
-_data = {
-&"RESET": SubResource("Animation_5exq1"),
-&"cloud_drift": SubResource("Animation_xgdjl")
-}
+[ext_resource type="PackedScene" uid="uid://eg72op6gcnyt" path="res://scenes/environment.tscn" id="9_0tnpc"]
 
 [node name="Game" type="Node3D" node_paths=PackedStringArray("timer_label", "result_label")]
 script = ExtResource("1_kvpfn")
 timer_label = NodePath("Timer")
 result_label = NodePath("Result")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("2_lbhrr")
-camera_attributes = ExtResource("3_iywne")
-compositor = ExtResource("4_p57ef")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.380086, -0.597633, 0.705953, 3.0629e-08, 0.763232, 0.646124, -0.924951, -0.245583, 0.290094, 2.64199, 2.05139, -1.296)
-light_energy = 0.3
-shadow_enabled = true
 
 [node name="CameraOrbit" type="Node3D" parent="."]
 script = ExtResource("4_0tnpc")
@@ -140,17 +87,7 @@ text = "You Win!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Clouds" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
-material_override = ExtResource("12_dinhu")
-mesh = SubResource("PlaneMesh_kvuet")
-surface_material_override/0 = ExtResource("12_dinhu")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Clouds"]
-libraries = {
-&"": SubResource("AnimationLibrary_4pb3l")
-}
-autoplay = "cloud_drift"
+[node name="Environment" parent="." instance=ExtResource("9_0tnpc")]
 
 [connection signal="block_marked" from="Minefield" to="Minefield" method="_on_block_marked"]
 [connection signal="block_revealed" from="Minefield" to="Minefield" method="_on_block_revealed"]

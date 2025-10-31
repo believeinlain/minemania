@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://eg72op6gcnyt"]
+
+[ext_resource type="PackedScene" uid="uid://ljwkmgavutbx" path="res://objects/clouds.tscn" id="1_hlc4h"]
+[ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://env/sky.tres" id="2_0psjf"]
+[ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://env/camera.tres" id="3_yw8f4"]
+[ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://env/compositor.tres" id="4_jtak5"]
+
+[node name="Environment" type="Node3D"]
+
+[node name="Clouds" parent="." instance=ExtResource("1_hlc4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+skeleton = NodePath("../..")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.38008606, -0.59763336, 0.7059526, 3.0629003e-08, 0.7632323, 0.6461243, -0.92495114, -0.2455828, 0.290094, 2.64199, 2.05139, -1.296)
+light_energy = 0.3
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_0psjf")
+camera_attributes = ExtResource("3_yw8f4")
+compositor = ExtResource("4_jtak5")
