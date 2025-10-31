@@ -23,7 +23,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
 script = ExtResource("2_iywne")
 camera_distance_factor = 1.5
 camera_distance_offset = 1.0
-camera_zoom_speed = 0.1
+camera_zoom_speed = 0.3
 
 [node name="Minefield" type="Node3D" parent="." node_paths=PackedStringArray("game")]
 script = ExtResource("6_p57ef")
@@ -31,10 +31,10 @@ game = NodePath("..")
 indicator_scale = 1.5
 block = ExtResource("7_vtaks")
 
-[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="Minefield" node_paths=PackedStringArray("minefield")]
+[node name="AudioPlayer" type="AudioStreamPlayer3D" parent="Minefield"]
 stream = ExtResource("6_u5sy4")
+attenuation_model = 2
 script = ExtResource("7_u5sy4")
-minefield = NodePath("..")
 
 [node name="Tooltip" type="Label" parent="Minefield"]
 offset_left = -23.0
@@ -91,6 +91,7 @@ vertical_alignment = 1
 
 [connection signal="block_marked" from="Minefield" to="Minefield" method="_on_block_marked"]
 [connection signal="block_revealed" from="Minefield" to="Minefield" method="_on_block_revealed"]
+[connection signal="block_revealed" from="Minefield" to="Minefield/AudioPlayer" method="_on_minefield_block_revealed"]
 [connection signal="indicator_clicked" from="Minefield" to="Minefield" method="_on_indicator_clicked"]
 [connection signal="indicator_mouseover" from="Minefield" to="Minefield" method="_on_indicator_mouseover"]
 [connection signal="indicator_mouseover" from="Minefield" to="Minefield/Tooltip" method="_on_minefield_indicator_mouseover"]

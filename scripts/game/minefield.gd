@@ -7,7 +7,7 @@ var initialized = false
 @export var indicator_scale = 1.0
 @export var block: PackedScene
 
-signal block_revealed(index: Vector3i)
+signal block_revealed(index: Vector3i, cascade: bool)
 signal block_marked(index: Vector3i, marked: bool)
 
 signal indicator_mouseover(index: Vector3i, value: int, mouseover: bool, pos: Vector2)
@@ -22,7 +22,7 @@ static func compute_world_size() -> Vector3:
 	return Vector3(Field.size) * block_scale
 
 
-func _on_block_revealed(index: Vector3i):
+func _on_block_revealed(index: Vector3i, _cascade: bool):
 	if not initialized:
 		initialize(index)
 

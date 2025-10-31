@@ -1,12 +1,7 @@
 extends AudioStreamPlayer3D
 
-@export var minefield: Minefield
 
-
-func _on_block_revealed(_index: Vector3i):
+func _on_minefield_block_revealed(_index: Vector3i, _cascade: bool) -> void:
 	stream = preload("res://audio/pop2.ogg")
+	#if !cascade:
 	play()
-
-
-func _ready():
-	minefield.block_revealed.connect(_on_block_revealed)
