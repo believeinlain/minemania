@@ -5,13 +5,12 @@
 [sub_resource type="PlaneMesh" id="PlaneMesh_kvuet"]
 size = Vector2(1000, 1000)
 
-[sub_resource type="Animation" id="Animation_xgdjl"]
-resource_name = "cloud_drift"
+[sub_resource type="Animation" id="Animation_5exq1"]
 length = 100.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:material_override:shader_parameter/uv1_offset")
+tracks/0/path = NodePath(".:surface_material_override/0:shader_parameter/uv1_offset")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -21,12 +20,13 @@ tracks/0/keys = {
 "values": [Vector3(0, 0, 0), Vector3(1, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_5exq1"]
+[sub_resource type="Animation" id="Animation_xgdjl"]
+resource_name = "cloud_drift"
 length = 100.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:surface_material_override/0:shader_parameter/uv1_offset")
+tracks/0/path = NodePath(".:material_override:shader_parameter/uv1_offset")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {

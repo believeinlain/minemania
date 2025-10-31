@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://eg72op6gcnyt"]
+[gd_scene load_steps=6 format=3 uid="uid://eg72op6gcnyt"]
 
 [ext_resource type="PackedScene" uid="uid://ljwkmgavutbx" path="res://objects/clouds.tscn" id="1_hlc4h"]
 [ext_resource type="Environment" uid="uid://dijkjosdc7yuf" path="res://env/sky.tres" id="2_0psjf"]
 [ext_resource type="CameraAttributesPractical" uid="uid://ddsu5x7g6u6u7" path="res://env/camera.tres" id="3_yw8f4"]
 [ext_resource type="Compositor" uid="uid://di2pv6lp4v76b" path="res://env/compositor.tres" id="4_jtak5"]
+[ext_resource type="AudioStream" uid="uid://b0yovysdf72l2" path="res://audio/wind.ogg" id="5_0psjf"]
 
 [node name="Environment" type="Node3D"]
 
@@ -20,3 +21,9 @@ shadow_enabled = true
 environment = ExtResource("2_0psjf")
 camera_attributes = ExtResource("3_yw8f4")
 compositor = ExtResource("4_jtak5")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_0psjf")
+volume_db = 1.0
+autoplay = true
+parameters/looping = true
